@@ -1,10 +1,10 @@
 import { css } from "styled-components";
 
-const container = css`
-  padding: 20px;
+export const container = css`
+  padding: 0 20px;
 
   ${({ theme }) => theme.device.tablet} {
-    padding: 40px;
+    padding: 0 40px;
   }
 
   ${({ theme }) => theme.device.desktop} {
