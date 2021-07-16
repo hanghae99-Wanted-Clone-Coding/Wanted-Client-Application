@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    color: ${({ theme }) => theme.colors.black};
   }
   
   a {
@@ -21,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     outline: none;
   }
-  
+
   button {
     padding: 0;
     cursor: pointer;
