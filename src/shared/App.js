@@ -6,6 +6,7 @@ import GlobalStyles from "./GlobalStyles";
 import { ThemeProvider } from "styled-components";
 
 import theme from "./theme";
+import Header from "../components/Header";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyles />
         <BrowserRouter>
+          <Header />
           <Route path="/" exact component={Explore} />
           <Route path="/opening/:id" exact component={Opening} />
           <Route path="/MyPage" exact component={MyPage} />
