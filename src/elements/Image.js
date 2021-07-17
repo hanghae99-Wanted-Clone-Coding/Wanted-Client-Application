@@ -25,6 +25,8 @@ const ImageRectangle = styled.div`
     left: 0;
     padding-top: 75%;
     overflow: hidden;
+    border : 1px solid #DDDDDD;
+    border-radius: 5px;
     background-image: url("${(props) => props.src}");
     background-size: cover;
 `;
