@@ -26,37 +26,40 @@ const Header = (props) => {
 
   return (
     <Container>
-      <Left>
-        <LogoBtn src={Logo} alt="원티드" />
-      </Left>
+      <Content>
+        <Left>
+          <LogoBtn src={Logo} alt="원티드" />
+        </Left>
 
-      <Mid>
-        <HomeBtn>홈</HomeBtn>
-        {menuList.map((item, idx) => (
-          <TextBtn key={idx}>{item.name}</TextBtn>
-        ))}
-      </Mid>
-      <Right>
-        <IconBtn icon={<HiOutlineSearch />} />
-        {isLogin && <IconBtn icon={<VscBell />} />}
-        {isLogin && <IconBtn icon={<VscMenu />} />}
-        {!isLogin && <ModalBtn>회원가입/로그인</ModalBtn>}
-      </Right>
+        <Mid>
+          <HomeBtn>홈</HomeBtn>
+          {menuList.map((item, idx) => (
+            <TextBtn key={idx}>{item.name}</TextBtn>
+          ))}
+        </Mid>
+        <Right>
+          <IconBtn icon={<HiOutlineSearch />} />
+          {isLogin && <IconBtn icon={<VscBell />} />}
+          {isLogin && <IconBtn icon={<VscMenu />} />}
+          {!isLogin && <ModalBtn>회원가입/로그인</ModalBtn>}
+        </Right>
+      </Content>
     </Container>
   );
 };
 
 const Container = styled.div`
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+const Content = styled.div`
   ${container};
   ${flex};
-  box-sizing: border-box;
   height: 60px;
   gap: 30px;
+  box-sizing: border-box;
   justify-content: space-between;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-
-  ${({ theme }) => theme.device.tablet} {
-  }
 `;
 
 const Left = styled.h1`
