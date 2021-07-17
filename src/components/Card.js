@@ -1,11 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
 import Text from "../elements/Text";
 import LikeBtn from "../elements/LikeBtn";
 
 const Card = (props) => {
-    
+
+    const [isLogin, setIsLogin] = useState(true);
+
+    if(!isLogin){
+      return(
+        <Text>로그인 하시오 모달 창</Text>
+      )
+    }
+
     return(
         <>
           <CardBox>
@@ -40,6 +48,7 @@ const Title = styled.div`
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 10px;
+  line-height: 1.3;
   ${({theme}) => theme.device.tablet} {
     font-size: 18px;
   }
@@ -49,6 +58,7 @@ const Company = styled.div`
   font-size: 11px;
   font-weight: 600;
   margin-bottom: 10px;
+  line-height: 1.6;
   ${({theme}) => theme.device.tablet} {
     font-size: 14px;
   }
@@ -61,6 +71,7 @@ const Location = styled.div`
   };
   color:  ${({theme}) => theme.colors.lightGray};
   margin-bottom: 10px;
+  line-height: 1.6;
 `;
 
 const Compensation = styled.div`
