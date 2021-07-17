@@ -17,18 +17,10 @@ const Header = (props) => {
       name: "탐색",
       path: "/",
     },
-    {
-      name: "커리어 성장",
-    },
-    {
-      name: "직군별 연봉",
-    },
-    {
-      name: "이력서",
-    },
-    {
-      name: "매치업",
-    },
+    { name: "커리어 성장" },
+    { name: "직군별 연봉" },
+    { name: "이력서" },
+    { name: "매치업" },
     { name: "프리랜서" },
   ];
 
@@ -36,11 +28,14 @@ const Header = (props) => {
     <Container>
       <Left>
         <LogoBtn src={Logo} alt="원티드" />
+      </Left>
+
+      <Mid>
         <HomeBtn>홈</HomeBtn>
         {menuList.map((item, idx) => (
           <TextBtn key={idx}>{item.name}</TextBtn>
         ))}
-      </Left>
+      </Mid>
       <Right>
         <IconBtn icon={<HiOutlineSearch />} />
         {isLogin && <IconBtn icon={<VscBell />} />}
@@ -64,7 +59,11 @@ const Container = styled.div`
   }
 `;
 
-const Left = styled.div`
+const Left = styled.h1`
+  ${hiddenMobile};
+`;
+
+const Mid = styled.nav`
 ${flex};
   height: 100%;
   min-width: 100px;
@@ -88,10 +87,13 @@ const TextBtn = styled.button`
   font-size: 13px;
   font-weight: 600;
   border-bottom: 2px solid transparent;
+
+  ${({ theme }) => theme.device.tablet} {
+    font-size: 14px;
+  }
 `;
 
 const LogoBtn = styled.img`
-  ${hiddenMobile};
   width: 75px;
   margin-right: 5px;
 `;
