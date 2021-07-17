@@ -52,7 +52,17 @@ const LocationMap = (props) => {
     // marker.setMap(map);
   }, []);
 
-  return <div id="map" style={{ width: "100%", height: "30vw" }}></div>;
+  return (
+    <div
+      id="map"
+      style={{
+        width: "100%",
+        height: "30vw",
+        minHeight: "200px",
+        maxHeight: "300px",
+      }}
+    ></div>
+  );
 };
 
 LocationMap.defaultProps = {
