@@ -1,4 +1,5 @@
 import React from "react";
+import {container} from "../mixin/container";
 import Card from "../components/Card";
 import styled from "styled-components";
 
@@ -22,14 +23,17 @@ const Explore = () => {
 };
 
 const CardContainer = styled.div`
+  ${container};
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
   
-
-  @media screen and (max-width: 990px) {
+  ${({theme}) => theme.device.tablet} {
     grid-template-columns: repeat(2, 1fr);
-    
+  }
+
+  ${({theme}) => theme.device.desktop} {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   `;
