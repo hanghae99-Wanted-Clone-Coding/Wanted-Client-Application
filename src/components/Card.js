@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
 import Text from "../elements/Text";
+import LikeBtn from "../elements/LikeBtn";
 
 const Card = (props) => {
     
     return(
         <>
           <CardBox>
-              <Image />
+              <LikeBtn>{props.likeCount}</LikeBtn>
+              <Image src={props.imgUrl} />
+
+              
               <Text padding="15px">
                 <Title>{props.title}</Title>
                 <Company>{props.companyName}</Company>
@@ -68,8 +72,9 @@ const Compensation = styled.div`
   
 
 Card.defaultProps = {
-  title: "프론트엔드 엔지니어(React)",
-  companyName: "굿닥(goodoc)",
+  // title: "프론트엔드 엔지니어(React)",
+  // companyName: "굿닥(goodoc)",
+  // imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
 
 }
 

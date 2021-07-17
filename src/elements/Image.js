@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-    const {shape, src, size} = props;
+    const {shape, src, size, children} = props;
 
     const styles = {
         src: src,
@@ -10,7 +10,7 @@ const Image = (props) => {
     }
 
     return(
-        <ImageRectangle {...styles}></ImageRectangle>
+        <ImageRectangle {...styles}>{children}</ImageRectangle>
     )
 }
 
