@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import Tags from "./Tags";
 import Reward from "../components/Reward";
-import HeartBtn from "../elements/HeartBtn";
 import { flexColumn } from "../mixin";
 
 const OpeningHeader = (props) => {
+  // 테스트 태그
   const tags = [
     { tagName: "연봉업계평균이상" },
     { tagName: "인원급성장" },
@@ -27,7 +27,6 @@ const OpeningHeader = (props) => {
       </CompanyInfo>
       <Tags tags={tags} />
       <Reward />
-      <HeartBtn heartNum="0" />
     </Box>
   );
 };
@@ -37,6 +36,10 @@ const Box = styled.div`
 
   ${({ theme }) => theme.device.tablet} {
     padding: 20px;
+  }
+
+  ${({ theme }) => theme.device.desktop} {
+    padding: 20px 0;
   }
 `;
 

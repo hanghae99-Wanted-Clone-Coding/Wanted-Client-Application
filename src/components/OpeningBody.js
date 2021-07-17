@@ -76,6 +76,7 @@ const Desc = css`
 
 const DescTitle = styled.dt`
   ${Desc};
+  flex-shrink: 0;
   width: 70px;
   color: ${({ theme }) => theme.colors.lightGray};
 `;
