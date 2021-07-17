@@ -27,10 +27,6 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
-  
-  ${({theme}) => theme.device.tablet} {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
   ${({theme}) => theme.device.desktop} {
     grid-template-columns: repeat(4, 1fr);
