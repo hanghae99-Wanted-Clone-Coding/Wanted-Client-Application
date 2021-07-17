@@ -14,4 +14,17 @@ const hiddenMobile = css`
   }
 `;
 
-export { onlyMobile, hiddenMobile };
+const onlyDesktop = css`
+  display: none;
+  ${({ theme }) => theme.device.desktop} {
+    display: initial;
+  }
+`;
+
+const hiddenDesktop = css`
+  ${({ theme }) => theme.device.desktop} {
+    display: none;
+  }
+`;
+
+export { onlyMobile, hiddenMobile, onlyDesktop, hiddenDesktop };
