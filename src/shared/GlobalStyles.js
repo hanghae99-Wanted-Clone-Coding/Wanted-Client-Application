@@ -7,6 +7,12 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     color: ${({ theme }) => theme.colors.black};
+    font-family: 'Nanum Gothic', sans-serif;
+  }
+
+  body {
+    font-family: 'Nanum Gothic', sans-serif;
+
   }
   
   a {
