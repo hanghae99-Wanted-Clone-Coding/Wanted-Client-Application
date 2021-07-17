@@ -1,6 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import MainText from "../elements/MainText";
+import { flex } from "../mixin";
 
 const OpeningBody = (props) => {
   const showMainText = () => {
@@ -30,13 +31,17 @@ const OpeningBody = (props) => {
     <section>
       <MainTextBox>{showMainText()}</MainTextBox>
 
-      <dl>
-        <dt>마감일</dt>
-        <dd>상시</dd>
+      <List>
+        <DescBox>
+          <DescTitle>마감일</DescTitle>
+          <DescText>상시</DescText>
+        </DescBox>
 
-        <dt>근무지역</dt>
-        <dd>서울 서초구 강남대로 311, 드림플러스 13층 1301호</dd>
-      </dl>
+        <DescBox>
+          <DescTitle>근무지역</DescTitle>
+          <DescText>서울 서초구 강남대로 311, 드림플러스 13층 1301호</DescText>
+        </DescBox>
+      </List>
     </section>
   );
 };
@@ -49,6 +54,30 @@ const MainTextBox = styled.div`
   ${({ theme }) => theme.device.tablet} {
     padding-bottom: 80px;
   }
+`;
+
+const List = styled.dl`
+  padding: 20px 0;
+`;
+
+const DescBox = styled.div`
+  ${flex};
+  margin-bottom: 20px;
+`;
+
+const Desc = css`
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+const DescTitle = styled.dt`
+  ${Desc};
+  width: 70px;
+  color: ${({ theme }) => theme.colors.lightGray};
+`;
+
+const DescText = styled.dd`
+  ${Desc};
 `;
 
 export default OpeningBody;
