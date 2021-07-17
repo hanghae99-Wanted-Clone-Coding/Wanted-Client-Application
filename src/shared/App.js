@@ -16,7 +16,7 @@ const App = () => {
         <BrowserRouter>
           <Header />
           <Route path="/" exact component={Explore} />
-          <Route path="/opening/:id" exact component={Opening} />
+          <Route path="/opening/:openingId" exact component={Opening} />
           <Route path="/MyPage" exact component={MyPage} />
         </BrowserRouter>
       </ThemeProvider>

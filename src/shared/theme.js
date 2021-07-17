@@ -4,7 +4,8 @@ const colors = {
   border: "rgb(236, 236, 236)",
   lightGray: "rgb(153, 153, 153)",
   gray: "rgb(102, 102, 102)",
-  bgGray: "rgb(249, 249, 250)",
+  bgGray: "rgb(245, 245, 248)",
+  heartGray: "rgb(225, 226, 227)",
 };
 
 const device = {

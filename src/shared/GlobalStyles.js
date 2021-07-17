@@ -6,7 +6,14 @@ const GlobalStyles = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    font-family: 'Nanum Gothic', sans-serif;
+  }
+
+  body {
+    font-family: 'Nanum Gothic', sans-serif;
     color: ${({ theme }) => theme.colors.black};
+
+
   }
   
   a {
@@ -26,6 +33,10 @@ const GlobalStyles = createGlobalStyle`
   button {
     padding: 0;
     cursor: pointer;
+  }
+
+  li {
+    list-style: none;
   }
 `;
 

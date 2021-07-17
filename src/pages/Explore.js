@@ -1,5 +1,5 @@
 import React from "react";
-import {container} from "../mixin/container";
+import { container } from "../mixin/container";
 import Card from "../components/Card";
 import styled from "styled-components";
 
@@ -62,7 +62,7 @@ const Explore = () => {
     },
   ]
   return (
-    <>
+    <Container>
       <CardContainer>
         {openingList.map((l, idx) => {
           return(
@@ -72,9 +72,13 @@ const Explore = () => {
 
         }
       </CardContainer>
-    </>
-    );
+    </Container>
+  );
 };
+
+const Container = styled.div`
+  ${container};
+`;
 
 const CardContainer = styled.div`
   ${container};
@@ -82,10 +86,9 @@ const CardContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 
-  ${({theme}) => theme.device.desktop} {
+  ${({ theme }) => theme.device.desktop} {
     grid-template-columns: repeat(4, 1fr);
   }
-
-  `;
+`;
 
 export default Explore;
