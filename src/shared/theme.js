@@ -6,6 +6,7 @@ const colors = {
   gray: "rgb(102, 102, 102)",
   bgGray: "rgb(245, 245, 248)",
   heartGray: "rgb(225, 226, 227)",
+  white: "#ffffff",
 };
 
 const device = {
