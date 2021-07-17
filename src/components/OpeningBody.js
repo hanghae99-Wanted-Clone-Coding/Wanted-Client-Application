@@ -2,9 +2,11 @@ import React from "react";
 import styled, { css } from "styled-components";
 import MainText from "../elements/MainText";
 import { flex } from "../mixin";
-// import LocationMap from "./LocationMap";
+import LocationMap from "./LocationMap";
 
 const OpeningBody = (props) => {
+  const companyAddress = "서울 서초구 강남대로 311, 드림플러스 13층 1301호";
+
   const showMainText = () => {
     return (
       <MainText>
@@ -40,9 +42,9 @@ const OpeningBody = (props) => {
 
         <DescBox>
           <DescTitle>근무지역</DescTitle>
-          <DescText>서울 서초구 강남대로 311, 드림플러스 13층 1301호</DescText>
+          <DescText>{companyAddress}</DescText>
         </DescBox>
-        {/* <LocationMap /> */}
+        <LocationMap location={companyAddress} />
       </List>
     </section>
   );
