@@ -1,26 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import { flex, flexColumn } from "../mixin";
+import { flex, hiddenDesktop } from "../mixin";
+import Description from "../elements/Description";
+import HeartBtn from "../elements/HeartBtn";
 
 const Reward = (props) => {
   return (
-    <RewardBox>
-      <div>
-        <Title>채용보상금</Title>
-        <List>
-          <DescBox>
-            <DescTitle>추천인</DescTitle>
-            <DescText>500,000원</DescText>
-          </DescBox>
-          <DescBox>
-            <DescTitle>지원자</DescTitle>
-            <DescText>500,000원</DescText>
-          </DescBox>
-        </List>
-      </div>
-    </RewardBox>
+    <Container>
+      <HeartBtn heartNum="11" />
+      <RewardBox>
+        <div>
+          <Title>채용보상금</Title>
+          <List>
+            <Description dt="추천인" dd="500,000원" />
+            <Description dt="지원자" dd="500,000원" />
+          </List>
+        </div>
+      </RewardBox>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  ${hiddenDesktop};
+`;
 
 const RewardBox = styled.div`
   margin-bottom: 30px;
@@ -37,24 +40,6 @@ const Title = styled.h5`
 
 const List = styled.dl`
   ${flex};
-`;
-
-const DescBox = styled.div`
-  ${flexColumn};
-  align-items: flex-start;
-  width: 50%;
-`;
-
-const DescTitle = styled.dt`
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.lightGray};
-`;
-
-const DescText = styled.dd`
-  font-size: 15px;
-  font-weight: 600;
 `;
 
 export default Reward;
