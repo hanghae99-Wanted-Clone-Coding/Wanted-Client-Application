@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import MainText from "../elements/MainText";
 import { flex } from "../mixin";
+// import LocationMap from "./LocationMap";
 
 const OpeningBody = (props) => {
   const showMainText = () => {
@@ -41,6 +42,7 @@ const OpeningBody = (props) => {
           <DescTitle>근무지역</DescTitle>
           <DescText>서울 서초구 강남대로 311, 드림플러스 13층 1301호</DescText>
         </DescBox>
+        {/* <LocationMap /> */}
       </List>
     </section>
   );
