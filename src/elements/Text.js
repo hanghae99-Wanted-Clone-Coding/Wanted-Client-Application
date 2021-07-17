@@ -29,8 +29,8 @@ const TextBox = styled.div`
     font-size: ${(props) => props.size};
     font-weight: ${(props) => (props.bold? "600" : "400")};
     ${(props) => (props.margin? `margin: ${props.margin};` : '')};
-    ${(props) => (props.padding? `padding: ${props.padding};` : '')};
-`;
+    ${(props) => (props.padding? `padding: ${props.padding};` : '')};        
+    `;
 
 
 export default Text;
