@@ -2,6 +2,7 @@ import React from "react";
 import { container } from "../mixin/container";
 import Card from "../components/Card";
 import styled from "styled-components";
+import Slider from "../components/Slider";
 
 const Explore = () => {
 
@@ -62,23 +63,28 @@ const Explore = () => {
     },
   ]
   return (
-    <Container>
-      <CardContainer>
-        {openingList.map((l, idx) => {
-          return(
-            <Card key={idx} {...l}/>
-          )
-        })
+    <>
+      <Slider></Slider>
+      <Container>
+        <CardContainer>
+          {openingList.map((l, idx) => {
+            return(
+              <Card key={idx} {...l}/>
+            )
+          })
 
-        }
-      </CardContainer>
-    </Container>
+          }
+        </CardContainer>
+      </Container>
+    </>
   );
 };
 
 const Container = styled.div`
   ${container};
 `;
+
+
 
 const CardContainer = styled.div`
   ${container};
