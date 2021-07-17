@@ -1,27 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
+import Text from "../elements/Text";
 
 const Card = (props) => {
     
     return(
         <>
           <CardBox>
-                <Image />
-              
-              <div>
-                <div>채용공고제목</div>
-                <div>회사</div>
-                <div>한국</div>
-                <div>채용보상금</div>
-              </div>
+              <Image />
+              <Text padding="15px">
+                <Text size="18px" bold margin="0 0 10px 0">{props.title}</Text>
+                <Text size="14px" bold margin="0 0 13px 0">{props.companyName}</Text>
+                <Text size="14px" margin="0 0 13px 0">서울 · 한국</Text>
+                <Text size="13px">채용보상금 1,000,000원</Text>
+              </Text>
           </CardBox>
         </>
         
     );
 }
 
-//반응형 하고 싶었으나 뭔가 이상해짐
+
 const CardBox = styled.div`
     position: relative;
     width: 100%;
@@ -31,5 +31,11 @@ const CardBox = styled.div`
     border: 1px solid black;
     
 `;
+
+Card.defaultProps = {
+  title: "프론트엔드 엔지니어(React)",
+  companyName: "굿닥(goodoc)",
+
+}
 
 export default Card;
