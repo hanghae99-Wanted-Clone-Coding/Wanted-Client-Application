@@ -1,8 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import LocationMap from "./LocationMap";
+import CompanyCard from "./CompanyCard";
 import MainText from "../elements/MainText";
 import { flex } from "../mixin";
-import LocationMap from "./LocationMap";
 
 const OpeningBody = (props) => {
   const companyAddress = "서울 서초구 강남대로 311, 드림플러스 13층 1301호";
@@ -31,7 +32,7 @@ const OpeningBody = (props) => {
   };
 
   return (
-    <section>
+    <>
       <MainTextBox>{showMainText()}</MainTextBox>
 
       <List>
@@ -45,8 +46,9 @@ const OpeningBody = (props) => {
           <DescText>{companyAddress}</DescText>
         </DescBox>
         <LocationMap location={companyAddress} />
+        <CompanyCard />
       </List>
-    </section>
+    </>
   );
 };
 

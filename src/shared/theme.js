@@ -1,5 +1,6 @@
 const colors = {
   mainBlue: "rgb(51, 102, 255)",
+  lightBlue: "rgb(37, 139, 247)",
   black: "rgb(51, 51, 51)",
   border: "rgb(236, 236, 236)",
   lightGray: "rgb(153, 153, 153)",
