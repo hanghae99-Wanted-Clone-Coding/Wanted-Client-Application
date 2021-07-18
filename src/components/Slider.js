@@ -31,7 +31,10 @@ const Container = styled.div`
 
 const Box = styled.div`
   ${flex};
+  margin: 0 auto;
+  width: 68vw;
   border: 2px solid orange;
+  justify-content: space-between;
   
 `;
 
@@ -42,7 +45,7 @@ const CenterBox = styled.div`
   overflow: hidden;
   
   border: 2px solid red;
-  justify-content: space-between;
+  
   
 `;
 
@@ -79,19 +82,19 @@ const PrevButton = styled.button`
   width: 135px;
   height: 65px;
   text-align: left;
-  z-index : 1;
-  background-color: pink;
+  z-index : 2;
+ 
   border: 2px solid pink;
   ${hiddenMobile};
 `;
 
 const NextButton = styled.button`
   // position: absolute;
-  // right: -40px;
+  // right: 300px;
   width: 135px;
   height: 65px;
-  z-index : 1;
-  background-color: pink;
+  z-index : 2;
+ 
   border: 2px solid pink;
   ${hiddenMobile};
 `;
