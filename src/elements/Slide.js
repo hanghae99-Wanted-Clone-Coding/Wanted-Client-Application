@@ -18,9 +18,10 @@ Slide.defaultProps = {
 
 const JobBtn = styled.div`
     display: table;
-    // width: 970px
     width: 120px;
     height: 60px;
+    border-radius: 5px;
+    background-color: green;
     margin-right: 10px;
     flex-shrink: 0;
     
