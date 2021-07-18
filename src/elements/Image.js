@@ -21,7 +21,7 @@ const Image = (props) => {
 };
 
 Image.defaultProps = {
-  // shape: "Inner",
+  shape: "rectangle",
   src: "https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
   size: "50px",
 };
@@ -32,8 +32,8 @@ const SeedStyle = css`
 `;
 
 const Outer = styled.div`
-  width: 50px;
-  height: 50px;
+  width: ${(props) => props.size};
+  height: ${(props) => props.size};
   border: 1px solid #dddddd;
   overflow: hidden;
 `;
@@ -48,8 +48,8 @@ const ImageRectangle = styled.div`
 
 const ImageSquare = styled.div`
   ${SeedStyle};
-  width: 100%;
-  padding-top: 100%;
+  width: ${(props) => props.size};
+  padding-top: ${(props) => props.size};
 `;
 
 export default Image;
