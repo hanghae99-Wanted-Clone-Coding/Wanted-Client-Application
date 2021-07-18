@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
+import LoginModal from "../components/LoginModal";
 
 const Explore = () => {
 
@@ -70,7 +71,8 @@ const Explore = () => {
       
       <Container>
       <FilterHeader></FilterHeader>
-      <TagModal></TagModal>
+      {/* <TagModal></TagModal> */}
+      <LoginModal></LoginModal>
         <CardContainer>
           {openingList.map((l, idx) => {
             return(
