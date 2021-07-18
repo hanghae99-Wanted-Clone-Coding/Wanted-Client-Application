@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { container } from "../mixin/container";
+
 import Slide from "../elements/Slide";
+import { flex, hiddenMobile, container } from "../mixin";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 // import img1 from "./../img/1.jpg"; //자신이 원하는 이미지를 import 하세요.
 // import img2 from "./../img/2.jpg";
@@ -11,24 +12,40 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 const Container = styled.div`
   height: 141px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  display: flex;
+  
   `;
  
-const Box = styled.div`
-    display: flex;
-    position: relative;
-    width: 1060px;
-    margin: 0 auto;
-    border: 1px solid blue;
+// const Box = styled.div`
+//     ${flex};
+//     position: relative;
+//     width: 1045px;
+//     margin: 0 auto;
+// `;
+
+// const CenterBox = styled.div`
+//     margin: 0 auto;
+//     padding: 0;
     
+//     overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록 처리합니다.
+// `;
+
+const Box = styled.div`
+  ${flex};
+  border: 2px solid orange;
+  
 `;
 
 const CenterBox = styled.div`
-    max-width: 1060px;
-    margin: 0 auto;
-    overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록 처리합니다.
-    border: 1px solid black;
+  ${container};
+  ${flex};
+  
+  overflow: hidden;
+  
+  border: 2px solid red;
+  justify-content: space-between;
+  
 `;
+
 
 const Prev = styled(BsChevronLeft)`
   font-size: 20px;
@@ -38,45 +55,54 @@ const Next = styled(BsChevronRight)`
   font-size: 20px;
 `;
 
+const PrevBox = styled.div`
+  ${flex};
+  box-shadow: 5px 0px 5px white;
+  width: 40px;
+  height: 65px;
+  padding: 0px 20px 0px 0px;
+`;
+
+const NextBox = styled.div`
+  ${flex};
+  box-shadow: -10px 0px 10px white;
+  width: 40px;
+  height: 65px;
+  margin-left: auto;
+  padding: 0px 0px 0px 20px;
+  
+`;
+
 const PrevButton = styled.button`
-  position: absolute;
-  left: -40px;
+  // position: absolute;
+  // left: -40px;
   width: 135px;
-  height: 60px;
-  border: 1px solid coral;
-  // background-color: white;
+  height: 65px;
   text-align: left;
   z-index : 1;
+  background-color: pink;
+  border: 2px solid pink;
+  ${hiddenMobile};
 `;
 
 const NextButton = styled.button`
-  position: absolute;
-  right: -40px;
+  // position: absolute;
+  // right: -40px;
   width: 135px;
-  height: 60px;
-  border: 1px solid coral;
-  // background-color: white;
-  text-align: right;
+  height: 65px;
+  z-index : 1;
+  background-color: pink;
+  border: 2px solid pink;
+  ${hiddenMobile};
 `;
 
-const Button = styled.button`
-  all: unset;
-  border: 1px solid coral;
-  width: 135px;
-  height: 60px;
-  color: coral;
-  border-radius: 10px;
-  &:hover {
-    transition: all 0.3s ease-in-out;
-    background-color: coral;
-    color: #fff;
-  }
-`;
 const SliderContainer = styled.div`
-
-  width: 100%;
   display: flex; //이미지들을 가로로 나열합니다.
-  
+  width: 100%;
+  border: 1px solid blue;
+  @media screen and (max-width: 767px) {
+    overflow-x : auto;
+  }
 `;
 
 const TOTAL_SLIDES = 2;
@@ -109,9 +135,12 @@ return (
     <Container>
       {currentSlide}
       <Box>
-      {currentSlide > 0 && <PrevButton onClick={prevSlide}><Prev /></PrevButton>}
+      {currentSlide > 0 && 
+        <PrevButton onClick={prevSlide}>
+          <PrevBox><Prev /></PrevBox>
+        </PrevButton>}
       <CenterBox>
-      
+        
         <SliderContainer ref={slideRef}>
             <Slide />
             <Slide />
@@ -139,9 +168,12 @@ return (
             <Slide />
 
         </SliderContainer>
-        
+          
       </CenterBox>
-      {currentSlide < 2 && <NextButton onClick={nextSlide}><Next/></NextButton>}
+      {currentSlide < 2 && 
+        <NextButton onClick={nextSlide}>
+          <NextBox><Next/></NextBox>
+        </NextButton>}
       </Box>
       
     </Container>
