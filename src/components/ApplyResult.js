@@ -41,10 +41,19 @@ const ResultNum = styled.strong`
   margin-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
+
+  ${({ theme }) => theme.device.tablet} {
+    margin-bottom: 15px;
+    font-size: 36px;
+  }
 `;
 
 const ResultDesc = styled.span`
   font-size: 12px;
+
+  ${({ theme }) => theme.device.tablet} {
+    font-size: 16px;
+  }
 `;
 
 export default ApplyResult;

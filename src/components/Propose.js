@@ -29,6 +29,9 @@ const Content = styled.article`
   justify-content: space-around;
   height: 80px;
   background-color: ${({ theme }) => theme.colors.bgGray};
+
+  ${({ theme }) => theme.device.tablet} {
+  }
 `;
 
 const Result = styled.div`

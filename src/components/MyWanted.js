@@ -1,16 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import RoundImg from "../elements/RoundImg";
-import { Link } from "react-router-dom";
-import { container, flex } from "../mixin";
+import { flex, container, hiddenMobile } from "../mixin";
 
 const MyWanted = (props) => {
   return (
     <Container>
-      <TitleBox>
-        <Title>MY 원티드</Title>
-        <EditLink to="/mypage">기본정보 수정</EditLink>
-      </TitleBox>
       <Profile>
         <RoundImg
           mbSize="60px"
@@ -19,42 +14,49 @@ const MyWanted = (props) => {
           alt="내 프로필 사진"
         />
         <Name>안지현</Name>
+        <UserInfo>hwiyu25@gmail.com</UserInfo>
+        <UserInfo>010-1234-1234</UserInfo>
       </Profile>
     </Container>
   );
 };
 
 const Container = styled.section`
-  ${container}
   width: 100%;
-  padding-bottom: 20px;
+  padding: 20px;
   margin-bottom: 10px;
   background-color: ${({ theme }) => theme.colors.white};
-`;
 
-const TitleBox = styled.div`
-  ${flex};
-  justify-content: space-between;
-  padding: 20px 0;
-`;
-
-const Title = styled.h2`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const EditLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.mainBlue};
+  ${({ theme }) => theme.device.tablet} {
+    width: 250px;
+    height: 320px;
+    border: 1px solid ${({ theme }) => theme.colors.border};
+  }
 `;
 
 const Profile = styled.div`
   ${flex};
   gap: 10px;
+
+  ${({ theme }) => theme.device.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const Name = styled.strong`
   font-size: 18px;
   font-weight: 600;
+
+  ${({ theme }) => theme.device.tablet} {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+`;
+
+const UserInfo = styled.p`
+  ${hiddenMobile};
+  color: ${({ theme }) => theme.colors.lightGray};
+  font-size: 14px;
 `;
 
 export default MyWanted;

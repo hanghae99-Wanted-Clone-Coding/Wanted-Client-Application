@@ -4,7 +4,7 @@ import MyPageSection from "../elements/MyPageSection";
 
 const BookMark = (props) => {
   return (
-    <MyPageSection title="북마크" link="총 2개 전체보기">
+    <MyPageSection title="북마크" link="총 2개 전체보기" marginBt="-1px">
       <MyListCard
         title="[토스코어] Frontend Developer"
         company="비바리퍼블리카(토스)"
