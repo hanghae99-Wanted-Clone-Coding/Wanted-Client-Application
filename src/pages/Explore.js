@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { container } from "../mixin/container";
 import Card from "../components/Card";
 import styled from "styled-components";
@@ -6,81 +7,42 @@ import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
 import LoginModal from "../components/LoginModal";
+import { getAllOpeningsDB } from "../redux/modules/opening";
 
 const Explore = () => {
+  const dispatch = useDispatch();
+  const openingList = useSelector((state) => state.opening.openings) || [];
 
-  const openingList = [
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "백엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-    {
-      title: "프론트엔드 엔지니어(React)",
-      companyName: "굿닥(goodoc)",
-      imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-      likeCount: 12,
-    },
-  ]
+  useEffect(() => dispatch(getAllOpeningsDB()), []);
+
+  // 더미데이터
+  // const openingList = [
+  //   {
+  //     title: "프론트엔드 엔지니어(React)",
+  //     companyName: "굿닥(goodoc)",
+  //     imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
+  //     likeCount: 12,
+  //   },
+  //   {
+  //     title: "백엔드 엔지니어(React)",
+  //     companyName: "굿닥(goodoc)",
+  //     imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
+  //     likeCount: 12,
+  //   },
+  // ]
+
   return (
     <>
       <Slider></Slider>
-      
+
       <Container>
-      <FilterHeader></FilterHeader>
-      {/* <TagModal></TagModal> */}
-      <LoginModal></LoginModal>
+        <FilterHeader></FilterHeader>
+        {/* <TagModal></TagModal> */}
+        {/* <LoginModal></LoginModal> */}
         <CardContainer>
           {openingList.map((l, idx) => {
-            return(
-              <Card key={idx} {...l}/>
-            )
-          })
-
-          }
+            return <Card key={idx} {...l} />;
+          })}
         </CardContainer>
       </Container>
     </>
@@ -89,7 +51,6 @@ const Explore = () => {
 
 const Container = styled.div`
   ${container};
-  
 `;
 
 const CardContainer = styled.div`
@@ -100,7 +61,7 @@ const CardContainer = styled.div`
 
   ${({ theme }) => theme.device.desktop} {
     grid-template-columns: repeat(4, 1fr);
-  };
+  } ;
 `;
 
 export default Explore;
