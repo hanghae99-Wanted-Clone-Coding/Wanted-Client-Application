@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import ApplyResult from "../components/ApplyResult";
 import BookMark from "../components/BookMark";
 import MyLike from "../components/MyLike";
@@ -9,12 +8,14 @@ import Propose from "../components/Propose";
 import OnlyMobile from "../elements/OnlyMobile";
 import { container, flex, flexColumn, onlyMobile } from "../mixin";
 
-const MyPage = () => {
+const MyPage = (props) => {
+  const { history } = props;
+  const handleClick = () => history.push("/mypage");
   return (
     <Page>
       <TitleBox>
         <PageTitle>My 원티드</PageTitle>
-        <EditLink to="/mypage">기본정보 수정</EditLink>
+        <EditLink onClick={handleClick}>기본정보 수정</EditLink>
       </TitleBox>
       <Container>
         <Left>
@@ -95,7 +96,7 @@ const PageTitle = styled.h2`
   } ;
 `;
 
-const EditLink = styled(Link)`
+const EditLink = styled.span`
   ${onlyMobile};
   color: ${({ theme }) => theme.colors.mainBlue};
 `;

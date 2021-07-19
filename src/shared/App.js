@@ -1,4 +1,6 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "../redux/configStore";
 import Explore from "../pages/Explore";
 import Opening from "../pages/Opening";
 import MyPage from "../pages/MyPage";
@@ -13,12 +15,12 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <Header />
           <Route path="/" exact component={Explore} />
           <Route path="/opening/:openingId" exact component={Opening} />
-          <Route path="/MyPage" exact component={MyPage} />
-        </BrowserRouter>
+          <Route path="/mypage" exact component={MyPage} />
+        </ConnectedRouter>
       </ThemeProvider>
     </>
   );
