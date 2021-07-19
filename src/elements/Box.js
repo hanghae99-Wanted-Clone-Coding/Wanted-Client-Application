@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Box = (props) => {
-    const {is_flex, is_grid, width, margin, padding, children} = props;
+    const {bg, is_flex, is_grid, width, margin, padding, children, text_align} = props;
     
     const styles = {
         is_flex: is_flex,
@@ -10,12 +10,13 @@ const Box = (props) => {
         width: width,
         margin: margin,
         padding: padding,
-
+        text_align: text_align,
+        bg: bg,
     }
     
     return(
         <>
-            <Div>{children}</Div>
+            <Div {...styles}>{children}</Div>
         </>
 
     );
@@ -25,10 +26,11 @@ Box.defaultProps = {
     children: null,
     is_flex: false,
     is_grid: false,
-    width: "100%",
+    width: false,
     padding: false,
     margin: false,
-
+    text_align: "left",
+    bg: false,
 }
 
 const Div = styled.div`
@@ -44,9 +46,9 @@ const Div = styled.div`
     props.is_grid
         ? `display: grid;`
         : ""}
-    text-align: left;
-        
     
+    ${(props) => (props.text_align ? `text-align: ${props.text_align};` : "")}    
+    ${(props) => (props.bg ? `background-img: url(${props.bg});` : "")}
 `;
 
 export default Box;
