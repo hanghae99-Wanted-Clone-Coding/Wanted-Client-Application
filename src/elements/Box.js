@@ -26,7 +26,7 @@ Box.defaultProps = {
     children: null,
     is_flex: false,
     is_grid: false,
-    width: false,
+    width: "100%",
     padding: false,
     margin: false,
     text_align: "left",
@@ -34,8 +34,7 @@ Box.defaultProps = {
 }
 
 const Div = styled.div`
-
-    ${(props) => (props.width ? `padding: ${props.width};` : "")}
+    width: ${(props) => props.width};
     ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
     ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
     ${(props) =>

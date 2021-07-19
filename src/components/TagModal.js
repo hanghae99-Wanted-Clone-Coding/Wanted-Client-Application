@@ -4,17 +4,18 @@ import Box from "../elements/Box";
 import Text from "../elements/Text";
 import Tag from "../elements/Tag";
 import { flex } from "../mixin";
+import {GrClose} from "react-icons/gr";
 
-const TagModal = () => {
+const TagModal = ({showModal, closeModal, isTag}) => {
     return (
-        <>
+        <>{showModal ?
             <ModalContainer>
-                <ModalOverlay></ModalOverlay>
+                <ModalOverlay onClick={closeModal}></ModalOverlay>
                 <ModalContent>
                     <ModalHeader>
-                        <button>버튼</button>
-                        <button>버튼</button>
-                        <button>버튼</button>
+                        <button>초기화</button>
+                        <button>태그</button>
+                        <button onClick={closeModal}><GrClose /></button>
                     </ModalHeader>
                     <ModalBody>
                         <Box>
@@ -54,7 +55,7 @@ const TagModal = () => {
                         
                     </ModalFooter>
                 </ModalContent>
-            </ModalContainer>
+            </ModalContainer> : null}
         </>
     );
 }

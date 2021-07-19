@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Box from "../elements/Box";
 import Text from "../elements/Text";
@@ -10,54 +10,58 @@ import {GrApple, GrClose} from "react-icons/gr";
 import {RiKakaoTalkFill} from "react-icons/ri";
 import {HiOutlineMail} from "react-icons/hi";
 
-const LoginModal = () => {
-    return (
-        <>
-            <ModalContainer>
-                <ModalOverlay></ModalOverlay>
-                <ModalContent>
-                    <ModalHeader>
-                        <Box>
-                        <ModalLogo src={Logo}/>
-                        </Box>
-                        <button><GrClose /></button>
-                    </ModalHeader>
-                    <ModalBody>
-                        <Box text_align="center" margin="24px 0px 40px">
-                            <Text line_height="1.54" bold size="26px">지금 원티드에서
-                                <br/>
-                                딱 맞는 회사찾기
-                            </Text>
-                            <Box margin="16px 0 0 0" text_align="center">
-                                <Text  size="16px">나에게 딱 맞는 회사를 찾아보세요</Text>
-                            </Box>
-                        </Box>
-                        <Box>
-                            <Box padding="0 0 22px 0">
-                                <label>이메일</label>
-                                <Input/>
-                            </Box>
-                        </Box>
-                        <Box>
-                         <EmailBtn><HiOutlineMail />이메일로 시작하기</EmailBtn>
-                         <Box text_align="center" margin="0 0 10px 0">or</Box>
-                         <Btn><GrApple />Apple로 시작하기</Btn>
-                         <Btn><FcGoogle/>Google로 시작하기</Btn>
-                         <Btn><RiKakaoTalkFill />카카오로 시작하기</Btn>
-                        
-                        </Box>
-                        <P>
-                            걱정마세요! 여러분의 지원 활동은 SNS에 노출되지 않습니다.
-                            <br />
-                            회원가입 시 <a href="https://help.wanted.co.kr/hc/ko/articles/360035484292">개인정보 처리방침</a>
-                            과 <a href="https://help.wanted.co.kr/hc/ko/articles/360035844551">이용약관</a>을 확인하였으며, 
-                            <br />
-                            동의합니다.
-                        </P>
+const LoginModal = ({showModal, closeModal}) => {
 
-                    </ModalBody>
-                </ModalContent>
-            </ModalContainer>
+
+    return (
+        <>{showModal ?
+            <ModalContainer>
+            <ModalOverlay onClick={closeModal}></ModalOverlay>
+            <ModalContent>
+                <ModalHeader>
+                    <Box>
+                    <ModalLogo src={Logo}/>
+                    </Box>
+                    <button onClick={closeModal}><GrClose /></button>
+                </ModalHeader>
+                <ModalBody>
+                    <Box text_align="center" margin="24px 0px 40px">
+                        <Text line_height="1.54" bold size="26px">지금 원티드에서
+                            <br/>
+                            딱 맞는 회사찾기
+                        </Text>
+                        <Box margin="16px 0 0 0" text_align="center">
+                            <Text  size="16px">나에게 딱 맞는 회사를 찾아보세요</Text>
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Box padding="0 0 22px 0">
+                            <label>이메일</label>
+                            <Input/>
+                        </Box>
+                    </Box>
+                    <Box>
+                     <EmailBtn><HiOutlineMail />이메일로 시작하기</EmailBtn>
+                     <Box text_align="center" margin="0 0 10px 0">or</Box>
+                     <Btn><GrApple />Apple로 시작하기</Btn>
+                     <Btn><FcGoogle/>Google로 시작하기</Btn>
+                     <Btn><RiKakaoTalkFill />카카오로 시작하기</Btn>
+                    
+                    </Box>
+                    <P>
+                        걱정마세요! 여러분의 지원 활동은 SNS에 노출되지 않습니다.
+                        <br />
+                        회원가입 시 <a href="https://help.wanted.co.kr/hc/ko/articles/360035484292">개인정보 처리방침</a>
+                        과 <a href="https://help.wanted.co.kr/hc/ko/articles/360035844551">이용약관</a>을 확인하였으며, 
+                        <br />
+                        동의합니다.
+                    </P>
+
+                </ModalBody>
+            </ModalContent>
+        </ModalContainer> : null}
+        
+        
         </>
     );
 }
