@@ -24,7 +24,7 @@ Text.defaultProps = {
     padding: false,
 };
 
-const TextBox = styled.div`
+const TextBox = styled.span`
     color: ${(props) => props.color};
     font-size: ${(props) => props.size};
     font-weight: ${(props) => (props.bold? "600" : "400")};

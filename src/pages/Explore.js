@@ -3,6 +3,9 @@ import { container } from "../mixin/container";
 import Card from "../components/Card";
 import styled from "styled-components";
 import Slider from "../components/Slider";
+import FilterHeader from "../components/FilterHeader";
+import TagModal from "../components/TagModal";
+import LoginModal from "../components/LoginModal";
 
 const Explore = () => {
 
@@ -65,7 +68,11 @@ const Explore = () => {
   return (
     <>
       <Slider></Slider>
+      
       <Container>
+      <FilterHeader></FilterHeader>
+      {/* <TagModal></TagModal> */}
+      <LoginModal></LoginModal>
         <CardContainer>
           {openingList.map((l, idx) => {
             return(
@@ -82,9 +89,8 @@ const Explore = () => {
 
 const Container = styled.div`
   ${container};
+  
 `;
-
-
 
 const CardContainer = styled.div`
   ${container};
@@ -94,7 +100,7 @@ const CardContainer = styled.div`
 
   ${({ theme }) => theme.device.desktop} {
     grid-template-columns: repeat(4, 1fr);
-  }
+  };
 `;
 
 export default Explore;

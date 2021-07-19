@@ -100,7 +100,7 @@ const NextButton = styled.button`
 `;
 
 const SliderContainer = styled.div`
-  display: flex; //이미지들을 가로로 나열합니다.
+  display: flex; //버튼들을 가로로 나열합니다.
   width: 100%;
   border: 1px solid blue;
   @media screen and (max-width: 767px) {
