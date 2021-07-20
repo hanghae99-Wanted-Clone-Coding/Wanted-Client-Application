@@ -12,10 +12,10 @@ const GET_TAG_RESULTS = "opening/GET_TAG_RESULTS";
 const GET_CARRER_RESULTS = "opening/GET_CAREER_RESULTS";
 const GET_OPENING_DETAIL = "opening/GET_OPENING_DETAIL";
 const GET_RECOMMENDED_OPENINGS = "opening/GET_RECOMMENDED_OPENINGS";
+const REMOVE_CURRENT_OPENING = "opening/REMOVE_CURRENT_OPENING";
 
 // action creator
 const toggleLike = createAction(TOGGLE_LIKE);
-const getJobgroups = createAction(GET_JOBGROUPS);
 const getTags = createAction(GET_TAGS);
 const getAllOpenings = createAction(GET_ALL_OPENINGS, (openings) => ({
   openings,
@@ -23,8 +23,11 @@ const getAllOpenings = createAction(GET_ALL_OPENINGS, (openings) => ({
 const getJobgroupOpenings = createAction(GET_JOBGROUP_OPENINGS);
 const getTagResults = createAction(GET_TAG_RESULTS);
 const getCareerResults = createAction(GET_CARRER_RESULTS);
-const getOpeningDetail = createAction(GET_OPENING_DETAIL);
+const getOpeningDetail = createAction(GET_OPENING_DETAIL, (opening) => ({
+  opening,
+}));
 const getRecommendedOpenings = createAction(GET_RECOMMENDED_OPENINGS);
+export const removeCurrentOpening = createAction(REMOVE_CURRENT_OPENING);
 
 // initialState
 const initialState = {
@@ -38,7 +41,22 @@ const initialState = {
 export const getAllOpeningsDB =
   () =>
   (dispatch, getState, { history }) => {
-    apis.getAllOpenings().then((res) => dispatch(getAllOpenings(res.data)));
+    apis
+      .getAllOpenings()
+      .then((res) => dispatch(getAllOpenings(res.data)))
+      .catch((err) => console.log("공고 목록을 가져올 수 없습니다.", err));
+  };
+
+export const getOpeningDetailDB =
+  (openingId) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .getOpeningDetail(openingId)
+      .then((res) => {
+        const { data } = res;
+        dispatch(getOpeningDetail(data));
+      })
+      .catch((err) => console.log("공고 내용을 가져올 수 없습니다.", err));
   };
 
 // reducer
@@ -46,6 +64,7 @@ export default handleActions(
   {
     [TOGGLE_LIKE]: (state, action) => produce(state, (draft) => {}),
     [GET_TAGS]: (state, action) => produce(state, (draft) => {}),
+
     [GET_ALL_OPENINGS]: (state, action) =>
       produce(state, (draft) => {
         draft.openings = action.payload.openings;
@@ -53,9 +72,16 @@ export default handleActions(
     [GET_JOBGROUP_OPENINGS]: (state, action) => produce(state, (draft) => {}),
     [GET_TAG_RESULTS]: (state, action) => produce(state, (draft) => {}),
     [GET_CARRER_RESULTS]: (state, action) => produce(state, (draft) => {}),
-    [GET_OPENING_DETAIL]: (state, action) => produce(state, (draft) => {}),
+    [GET_OPENING_DETAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.currentOpening = action.payload.opening;
+      }),
     [GET_RECOMMENDED_OPENINGS]: (state, action) =>
       produce(state, (draft) => {}),
+    [REMOVE_CURRENT_OPENING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.currentOpening = {};
+      }),
   },
   initialState
 );

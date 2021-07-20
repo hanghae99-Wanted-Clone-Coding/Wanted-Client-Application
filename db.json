@@ -94,20 +94,22 @@
     }
   ],
   "opening": {
-    "imgUrl": "www.xxxx.jpeg",
-    "title": "플앤드테크놀러지",
+    "imgUrl": "https://images.unsplash.com/photo-1593642634524-b40b5baae6bb?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80",
+    "title": "안드로이드 개발자 모집",
     "location": "서울 : 한국",
     "locationDetail": "삼성로95길 27 영창빌딩 2층",
+    "companyName": "배달의 민족",
     "content": "플앤드테크놀러지는 차별화된 xxx",
     "likeCnt": 12,
+    "id": 1,
     "tags": [
       {
         "id": 1,
-        "name": "연봉상승 1위"
+        "tagName": "연봉상승 1위"
       },
       {
         "id": 2,
-        "name": "연봉상승 1위"
+        "tagName": "연봉상승 1위"
       }
     ]
   }
