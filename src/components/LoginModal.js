@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+
 import {KAKAO_AUTH_URL} from "../shared/OAuth";
+import { useDispatch } from "react-redux";
 import {setCookie} from "../shared/Cookie";
 
 import Box from "../elements/Box";
@@ -13,8 +15,28 @@ import {GrApple, GrClose} from "react-icons/gr";
 import {RiKakaoTalkFill} from "react-icons/ri";
 import {HiOutlineMail} from "react-icons/hi";
 
-const LoginModal = ({showModal, closeModal}) => {
+const LoginModal = (props) => {
+    const {history, showModal, closeModal} = props;
+    const dispatch = useDispatch();
 
+    const [email, setEmail] = React.useState("");
+    const [isEmailErr, setIsEmailErr] = React.useState(false);
+    
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+        if (isEmailErr) {
+            setIsEmailErr(false);
+        }
+    };
+
+    const emailLogin = () => {
+        if(email.match(regExp) === null){
+            setIsEmailErr(true);
+        }
+        
+    }
 
     return (
         <>{showModal ?
@@ -40,11 +62,14 @@ const LoginModal = ({showModal, closeModal}) => {
                     <Box>
                         <Box padding="0 0 22px 0">
                             <label>이메일</label>
-                            <Input/>
+                            { !isEmailErr && <Input onChange={onChangeEmail}/>}
+                            { isEmailErr && 
+                            <ErrInput onchange={onChangeEmail}/> &&
+                            <Box color="red">올바른 이메일 형식을 입력해주세요</Box>}
                         </Box>
                     </Box>
                     <Box>
-                     <EmailBtn><HiOutlineMail />이메일로 시작하기</EmailBtn>
+                     <EmailBtn onClick={emailLogin}><HiOutlineMail />이메일로 시작하기</EmailBtn>
                      <Box text_align="center" margin="0 0 10px 0">or</Box>
                      <Btn><GrApple />Apple로 시작하기</Btn>
                      <Btn><FcGoogle/>Google로 시작하기</Btn>
@@ -128,6 +153,14 @@ const Input = styled.input`
     width: 100%;
     height: 50px;
     border: 2px solid ${({theme}) => theme.colors.bgGray};
+    border-radius: 5px;
+    margin-top: 10px;
+`;
+
+const ErrInput = styled.input`
+    width: 100%;
+    height: 50px;
+    border: 2px solid red;
     border-radius: 5px;
     margin-top: 10px;
 `;
