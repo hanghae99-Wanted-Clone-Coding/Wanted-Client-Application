@@ -23,7 +23,9 @@ const getTags = createAction(GET_TAGS);
 const getAllOpenings = createAction(GET_ALL_OPENINGS, (openings) => ({
   openings,
 }));
-const getJobgroupOpenings = createAction(GET_JOBGROUP_OPENINGS);
+const getJobgroupOpenings = createAction(GET_JOBGROUP_OPENINGS, (openings) => ({
+  openings,
+}));
 const getTagResults = createAction(GET_TAG_RESULTS);
 const getCareerResults = createAction(GET_CARRER_RESULTS);
 const getOpeningDetail = createAction(GET_OPENING_DETAIL, (opening) => ({
@@ -47,7 +49,9 @@ export const getJobgroupsDB =
     apis
       .getJobgroups()
       .then((res) => dispatch(getJobgroups(res.data)))
-      .catch((err) => console.log("직무 그룹 목록을 가져올 수 없습니다.", err));
+      .catch((err) =>
+        console.log("직무 그룹 리스트를 가져올 수 없습니다.", err)
+      );
   };
 
 export const getAllOpeningsDB =
@@ -57,6 +61,17 @@ export const getAllOpeningsDB =
       .getAllOpenings()
       .then((res) => dispatch(getAllOpenings(res.data)))
       .catch((err) => console.log("공고 목록을 가져올 수 없습니다.", err));
+  };
+
+export const getJobgroupOpeningsDB =
+  (jobGroupId) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .getJobGroupOpenings()
+      .then((res) => dispatch(getJobgroupOpenings(res.data)))
+      .catch((err) =>
+        console.log("해당 직무의 공고 목록를 가져올 수 없습니다.", err)
+      );
   };
 
 export const getOpeningDetailDB =
@@ -84,7 +99,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.openings = action.payload.openings;
       }),
-    [GET_JOBGROUP_OPENINGS]: (state, action) => produce(state, (draft) => {}),
+    [GET_JOBGROUP_OPENINGS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.openings = action.payload.openings;
+      }),
     [GET_TAG_RESULTS]: (state, action) => produce(state, (draft) => {}),
     [GET_CARRER_RESULTS]: (state, action) => produce(state, (draft) => {}),
     [GET_OPENING_DETAIL]: (state, action) =>

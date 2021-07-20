@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { container } from "../mixin/container";
+import { history } from "../redux/configStore";
 import Card from "../components/Card";
 import styled from "styled-components";
 import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
 import LoginModal from "../components/LoginModal";
-import { getJobgroupsDB, getAllOpeningsDB } from "../redux/modules/opening";
+import {
+  getJobgroupsDB,
+  getAllOpeningsDB,
+  getJobgroupOpeningsDB,
+} from "../redux/modules/opening";
 
-const Explore = () => {
+const Explore = (props) => {
   const dispatch = useDispatch();
   const jobGroups = useSelector((state) => state.opening.jobGroups) || [];
   const openingList = useSelector((state) => state.opening.openings) || [];
@@ -19,25 +24,22 @@ const Explore = () => {
     dispatch(getAllOpeningsDB());
   }, []);
 
-  // 더미데이터
-  // const openingList = [
-  //   {
-  //     title: "프론트엔드 엔지니어(React)",
-  //     companyName: "굿닥(goodoc)",
-  //     imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-  //     likeCount: 12,
-  //   },
-  //   {
-  //     title: "백엔드 엔지니어(React)",
-  //     companyName: "굿닥(goodoc)",
-  //     imgUrl:"https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
-  //     likeCount: 12,
-  //   },
-  // ]
+  const clickJobGroup = (jobGroupId) => {
+    history.push({
+      pathname: "/",
+      search: `?jobgroup=${id}`,
+    });
+    dispatch(getJobgroupOpeningsDB(jobGroupId));
+  };
+  const id = 1;
 
   return (
     <>
       <Slider />
+
+      {/* ↓↓↓ 테스트버튼입니다 - 서버와 연결할 때 삭제 필요 */}
+      <button onClick={() => clickJobGroup(id)}>테스트 버튼</button>
+      {/* ↑↑↑ 테스트버튼입니다. */}
 
       <Container>
         <FilterHeader />
