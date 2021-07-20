@@ -22,18 +22,22 @@ const loginDB = (code) => {
   return function (dispatch, getState, {history}) {
     axios({
       method: "POST",
-      url: `.../api/login?code=${code}`, 
+      // url: `localhost:3000/api/login?code=${code}`,
+      url: `localhost:3000/user/kakao/callback?code=${code}`, 
       // 보내기로 약속한 url
     })
     .then((res) => {
-      const accessToken = res.data.token;
+      console.log(res);
 
-      setCookie("is_login", `${accessToken}`);
+      const ACCESS_TOKEN = res.data.accessToken;
+
+      setCookie("is_login", `${ACCESS_TOKEN}`);
       history.replace("/");
     })
     .catch((err) => {
       console.log(err);
       window.alert("로그인에 실패하였습니다")
+      history.replace("/");
     })
   }
 }

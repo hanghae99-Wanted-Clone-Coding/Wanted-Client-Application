@@ -6,6 +6,7 @@ import Opening from "../pages/Opening";
 import MyPage from "../pages/MyPage";
 import GlobalStyles from "./GlobalStyles";
 import { ThemeProvider } from "styled-components";
+import KakaoRedirect from "../pages/KakaoRedirect";
 
 import theme from "./theme";
 import Header from "../components/Header";
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/" exact component={Explore} />
           <Route path="/opening/:openingId" exact component={Opening} />
           <Route path="/mypage" exact component={MyPage} />
+          <Route path="/user/kakao/callback" component={KakaoRedirect}/>
         </ConnectedRouter>
       </ThemeProvider>
     </>
