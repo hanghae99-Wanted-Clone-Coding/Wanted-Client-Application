@@ -1,5 +1,8 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import {KAKAO_AUTH_URL} from "../shared/OAuth";
+import {setCookie} from "../shared/Cookie";
+
 import Box from "../elements/Box";
 import Text from "../elements/Text";
 import Image from "../elements/Image";
@@ -45,7 +48,7 @@ const LoginModal = ({showModal, closeModal}) => {
                      <Box text_align="center" margin="0 0 10px 0">or</Box>
                      <Btn><GrApple />Apple로 시작하기</Btn>
                      <Btn><FcGoogle/>Google로 시작하기</Btn>
-                     <Btn><RiKakaoTalkFill />카카오로 시작하기</Btn>
+                     <Btn href={KAKAO_AUTH_URL}><RiKakaoTalkFill />카카오로 시작하기</Btn>
                     
                     </Box>
                     <P>
