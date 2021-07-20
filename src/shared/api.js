@@ -9,7 +9,7 @@ const api = axios.create({
 });
 
 export const apis = {
-  getJobGroups: () => api.get("/api/job-groups"),
+  getJobgroups: () => api.get("/job-groups"),
   getTags: () => api.get("/api/tags"),
   getAllOpenings: () => api.get("/openings"),
   getJobGroupOpenings: (jobgroupId) => api.get(`/api/openings/${jobgroupId}`),

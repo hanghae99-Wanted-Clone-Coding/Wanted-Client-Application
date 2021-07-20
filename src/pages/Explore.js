@@ -7,13 +7,17 @@ import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
 import LoginModal from "../components/LoginModal";
-import { getAllOpeningsDB } from "../redux/modules/opening";
+import { getJobgroupsDB, getAllOpeningsDB } from "../redux/modules/opening";
 
 const Explore = () => {
   const dispatch = useDispatch();
+  const jobGroups = useSelector((state) => state.opening.jobGroups) || [];
   const openingList = useSelector((state) => state.opening.openings) || [];
 
-  useEffect(() => dispatch(getAllOpeningsDB()), []);
+  useEffect(() => {
+    dispatch(getJobgroupsDB());
+    dispatch(getAllOpeningsDB());
+  }, []);
 
   // 더미데이터
   // const openingList = [
@@ -33,10 +37,10 @@ const Explore = () => {
 
   return (
     <>
-      <Slider></Slider>
+      <Slider />
 
       <Container>
-        <FilterHeader></FilterHeader>
+        <FilterHeader />
         {/* <TagModal></TagModal> */}
         {/* <LoginModal></LoginModal> */}
         <CardContainer>
