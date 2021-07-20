@@ -5,15 +5,18 @@ import Text from "../elements/Text";
 import Tag from "../elements/Tag";
 import { flex } from "../mixin";
 import { useSelector, useDispatch } from "react-redux";
-import { getTagsDB } from "../redux/modules/opening";
+import { getSecondTagsDB, getTagsDB } from "../redux/modules/opening";
 
 const TagModal = () => {
   const dispatch = useDispatch();
   const categoryList = useSelector((state) => state.opening.tags) || [];
+  const secondTags = useSelector((state) => state.opening.secondTag) || [];
 
   useEffect(() => dispatch(getTagsDB()), []);
 
-  console.log(categoryList);
+  const clickCategory = (id) => {
+    dispatch(getSecondTagsDB(id));
+  };
 
   return (
     <>
@@ -37,7 +40,7 @@ const TagModal = () => {
                 <h3>1. 카테고리 선택</h3>
                 <CategoriBox>
                   {categoryList.map((item, idx) => (
-                    <li key={idx}>
+                    <li key={idx} onClick={() => clickCategory(item.tagId)}>
                       <CategoriBtn>{item.name}</CategoriBtn>
                     </li>
                   ))}
@@ -46,15 +49,11 @@ const TagModal = () => {
               <Box>
                 <h3>2. 태그 선택</h3>
                 <TagBox>
-                  <li>
-                    <Tag name="연봉업계평균이상" />
-                  </li>
-                  <li>
-                    <Tag name="연봉업계평균이상" />
-                  </li>
-                  <li>
-                    <Tag name="연봉업계평균이상" />
-                  </li>
+                  {secondTags.map((item, idx) => (
+                    <li key={idx}>
+                      <Tag name={item.name} />
+                    </li>
+                  ))}
                 </TagBox>
               </Box>
             </Box>

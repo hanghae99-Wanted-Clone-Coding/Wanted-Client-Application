@@ -6,6 +6,7 @@ import { apis } from "../../shared/api";
 const TOGGLE_LIKE = "opening/TOGGLE_LIKE";
 const GET_JOBGROUPS = "opening/GET_JOBGROUPS";
 const GET_TAGS = "opening/GET_TAGS";
+const GET_SECOND_TAGS = "opening/GET_SECOND_TAGS";
 const GET_ALL_OPENINGS = "opening/GET_ALL_OPENINGS";
 const GET_JOBGROUP_OPENINGS = "opening/GET_JOBGROUP_OPENINGS";
 const GET_TAG_RESULTS = "opening/GET_TAG_RESULTS";
@@ -20,6 +21,9 @@ const getJobgroups = createAction(GET_JOBGROUPS, (jobgroups) => ({
   jobgroups,
 }));
 const getTags = createAction(GET_TAGS, (tags) => ({ tags }));
+const getSecondTags = createAction(GET_SECOND_TAGS, (secondTags) => ({
+  secondTags,
+}));
 const getAllOpenings = createAction(GET_ALL_OPENINGS, (openings) => ({
   openings,
 }));
@@ -38,6 +42,7 @@ export const removeCurrentOpening = createAction(REMOVE_CURRENT_OPENING);
 const initialState = {
   jobGroups: [],
   tags: [],
+  secondTag: [],
   openings: [],
   currentOpening: {},
 };
@@ -50,7 +55,7 @@ export const getJobgroupsDB =
       .getJobgroups()
       .then((res) => dispatch(getJobgroups(res.data)))
       .catch((err) =>
-        console.log("직무 그룹 리스트를 가져올 수 없습니다.", err)
+        console.log("직무 그룹 리스트를 불러올 수 없습니다.", err)
       );
   };
 
@@ -60,7 +65,16 @@ export const getTagsDB =
     apis
       .getTags()
       .then((res) => dispatch(getTags(res.data)))
-      .catch((err) => console.log("태그를 가져올 수 없습니다.", err));
+      .catch((err) => console.log("태그를 불러올 수 없습니다.", err));
+  };
+
+export const getSecondTagsDB =
+  (tagId) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .getSecondTags(tagId)
+      .then((res) => dispatch(getSecondTags(res.data)))
+      .catch((err) => console.log("2차 태그를 불러올 수 없습니다.", err));
   };
 
 export const getAllOpeningsDB =
@@ -79,7 +93,7 @@ export const getJobgroupOpeningsDB =
       .getJobGroupOpenings()
       .then((res) => dispatch(getJobgroupOpenings(res.data)))
       .catch((err) =>
-        console.log("해당 직무의 공고 목록를 가져올 수 없습니다.", err)
+        console.log("해당 직무의 공고 목록를 불러올 수 없습니다.", err)
       );
   };
 
@@ -102,6 +116,10 @@ export default handleActions(
     [GET_TAGS]: (state, action) =>
       produce(state, (draft) => {
         draft.tags = action.payload.tags;
+      }),
+    [GET_SECOND_TAGS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.secondTag = action.payload.secondTags;
       }),
     [GET_JOBGROUPS]: (state, action) =>
       produce(state, (draft) => {
