@@ -6,6 +6,7 @@ import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
 import LoginModal from "../components/LoginModal";
+import CareerModal from "../components/CareerModal";
 
 const Explore = () => {
 
@@ -71,8 +72,7 @@ const Explore = () => {
       
       <Container>
       <FilterHeader></FilterHeader>
-      {/* <TagModal></TagModal> */}
-      <LoginModal></LoginModal>
+      
         <CardContainer>
           {openingList.map((l, idx) => {
             return(

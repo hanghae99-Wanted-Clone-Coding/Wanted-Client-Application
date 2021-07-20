@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Box = (props) => {
-    const {bg, is_flex, is_grid, width, margin, padding, children, text_align} = props;
+    const {bg, color, is_flex, is_grid, width, margin, padding, children, text_align} = props;
     
     const styles = {
         is_flex: is_flex,
@@ -12,6 +12,7 @@ const Box = (props) => {
         padding: padding,
         text_align: text_align,
         bg: bg,
+        color: color,
     }
     
     return(
@@ -26,16 +27,17 @@ Box.defaultProps = {
     children: null,
     is_flex: false,
     is_grid: false,
-    width: false,
+    width: "100%",
     padding: false,
     margin: false,
     text_align: "left",
     bg: false,
+    color: "black",
 }
 
 const Div = styled.div`
-
-    ${(props) => (props.width ? `padding: ${props.width};` : "")}
+    width: ${(props) => props.width};
+    color: ${(props) => props.color};
     ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
     ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
     ${(props) =>
