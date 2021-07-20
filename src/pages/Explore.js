@@ -43,7 +43,7 @@ const Explore = (props) => {
 
       <Container>
         <FilterHeader />
-        {/* <TagModal></TagModal> */}
+        <TagModal />
         {/* <LoginModal></LoginModal> */}
         <CardContainer>
           {openingList.map((l, idx) => {

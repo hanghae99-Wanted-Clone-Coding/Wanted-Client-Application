@@ -19,7 +19,7 @@ const toggleLike = createAction(TOGGLE_LIKE);
 const getJobgroups = createAction(GET_JOBGROUPS, (jobgroups) => ({
   jobgroups,
 }));
-const getTags = createAction(GET_TAGS);
+const getTags = createAction(GET_TAGS, (tags) => ({ tags }));
 const getAllOpenings = createAction(GET_ALL_OPENINGS, (openings) => ({
   openings,
 }));
@@ -52,6 +52,15 @@ export const getJobgroupsDB =
       .catch((err) =>
         console.log("직무 그룹 리스트를 가져올 수 없습니다.", err)
       );
+  };
+
+export const getTagsDB =
+  () =>
+  (dispatch, getState, { history }) => {
+    apis
+      .getTags()
+      .then((res) => dispatch(getTags(res.data)))
+      .catch((err) => console.log("태그를 가져올 수 없습니다.", err));
   };
 
 export const getAllOpeningsDB =
@@ -90,7 +99,10 @@ export const getOpeningDetailDB =
 export default handleActions(
   {
     [TOGGLE_LIKE]: (state, action) => produce(state, (draft) => {}),
-    [GET_TAGS]: (state, action) => produce(state, (draft) => {}),
+    [GET_TAGS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.tags = action.payload.tags;
+      }),
     [GET_JOBGROUPS]: (state, action) =>
       produce(state, (draft) => {
         draft.jobGroups = action.payload.jobgroups;
