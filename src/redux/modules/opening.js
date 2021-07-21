@@ -30,12 +30,17 @@ const getAllOpenings = createAction(GET_ALL_OPENINGS, (openings) => ({
 const getJobgroupOpenings = createAction(GET_JOBGROUP_OPENINGS, (openings) => ({
   openings,
 }));
-const getTagResults = createAction(GET_TAG_RESULTS);
+const getTagResults = createAction(GET_TAG_RESULTS, (openings) => ({
+  openings,
+}));
 const getCareerResults = createAction(GET_CARRER_RESULTS);
 const getOpeningDetail = createAction(GET_OPENING_DETAIL, (opening) => ({
   opening,
 }));
-const getRecommendedOpenings = createAction(GET_RECOMMENDED_OPENINGS);
+const getRecommendedOpenings = createAction(
+  GET_RECOMMENDED_OPENINGS,
+  (openings) => ({ openings })
+);
 export const removeCurrentOpening = createAction(REMOVE_CURRENT_OPENING);
 
 // initialState
@@ -44,6 +49,7 @@ const initialState = {
   tags: [],
   secondTag: [],
   openings: [],
+  recommendedOpenings: [],
   currentOpening: {},
 };
 
@@ -97,6 +103,19 @@ export const getJobgroupOpeningsDB =
       );
   };
 
+export const getTagResultsDB =
+  (tagObj) =>
+  (dispatch, getState, { history }) => {
+    const { tag1, tag2, tag3 } = tagObj;
+    const newTagObj = {
+      names: [{ name: tag1 }, { name: tag2 }, { name: tag3 }],
+    };
+    apis
+      .getTagResults(newTagObj)
+      .then((res) => dispatch(getTagResults(res.data)))
+      .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
+  };
+
 export const getOpeningDetailDB =
   (openingId) =>
   (dispatch, getState, { history }) => {
@@ -107,6 +126,24 @@ export const getOpeningDetailDB =
         dispatch(getOpeningDetail(data));
       })
       .catch((err) => console.log("공고 내용을 가져올 수 없습니다.", err));
+  };
+
+export const getRecommendedOpeningsDB =
+  (openingId) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .getRecommendedOpenings(openingId)
+      .then((res) => dispatch(getRecommendedOpenings(res.data)))
+      .catch((err) => console.log("정보를 불러올 수 없습니다.".err));
+  };
+
+export const getCareerResultsDB =
+  (career) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .getCareerResults(career)
+      .then((res) => dispatch(getCareerResults(res.data)))
+      .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
 
 // reducer
@@ -133,14 +170,22 @@ export default handleActions(
       produce(state, (draft) => {
         draft.openings = action.payload.openings;
       }),
-    [GET_TAG_RESULTS]: (state, action) => produce(state, (draft) => {}),
-    [GET_CARRER_RESULTS]: (state, action) => produce(state, (draft) => {}),
+    [GET_TAG_RESULTS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.openings = action.payload.openings;
+      }),
+    [GET_CARRER_RESULTS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.openings = action.payload.openings;
+      }),
     [GET_OPENING_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.currentOpening = action.payload.opening;
       }),
     [GET_RECOMMENDED_OPENINGS]: (state, action) =>
-      produce(state, (draft) => {}),
+      produce(state, (draft) => {
+        draft.recommendedOpenings = action.payload.openings;
+      }),
     [REMOVE_CURRENT_OPENING]: (state, action) =>
       produce(state, (draft) => {
         draft.currentOpening = {};
