@@ -1,21 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Box from "../elements/Box";
 import Text from "../elements/Text";
 import Tag from "../elements/Tag";
 import { flex } from "../mixin";
 import { useSelector, useDispatch } from "react-redux";
-import { getSecondTagsDB, getTagsDB } from "../redux/modules/opening";
+import {
+  getSecondTagsDB,
+  getTagResultsDB,
+  getTagsDB,
+} from "../redux/modules/opening";
 
 const TagModal = () => {
   const dispatch = useDispatch();
   const categoryList = useSelector((state) => state.opening.tags) || [];
   const secondTags = useSelector((state) => state.opening.secondTag) || [];
 
+  const [choices, setChoices] = useState([]);
+
   useEffect(() => dispatch(getTagsDB()), []);
 
   const clickCategory = (id) => {
     dispatch(getSecondTagsDB(id));
+  };
+
+  const choiceTag = (name) => {
+    if (
+      choices.length !== 0 &&
+      choices.findIndex((ele) => ele === name) !== -1
+    ) {
+      const newAry = choices.filter((ele) => ele !== name);
+      setChoices(newAry);
+      return;
+    }
+    if (choices.length >= 3) {
+      alert("태그는 3개 까지 선택 가능합니다.");
+      return;
+    }
+    setChoices([...choices, name]);
+  };
+
+  const submitTags = () => {
+    dispatch(getTagResultsDB(choices));
   };
 
   return (
@@ -50,7 +76,7 @@ const TagModal = () => {
                 <h3>2. 태그 선택</h3>
                 <TagBox>
                   {secondTags.map((item, idx) => (
-                    <li key={idx}>
+                    <li key={idx} onClick={() => choiceTag(item.name)}>
                       <Tag name={item.name} />
                     </li>
                   ))}
@@ -60,7 +86,7 @@ const TagModal = () => {
           </ModalBody>
           <ModalFooter>
             <SelectedTags></SelectedTags>
-            <ConfirmBtn>확인</ConfirmBtn>
+            <ConfirmBtn onClick={submitTags}>확인</ConfirmBtn>
           </ModalFooter>
         </ModalContent>
       </ModalContainer>
