@@ -26,6 +26,8 @@ const Explore = (props) => {
     dispatch(getAllOpeningsDB());
   }, []);
 
+  const moveDetailPage = (openingId) => history.push(`/opening/${openingId}`);
+
   const clickJobGroup = (jobGroupId) => {
     history.push({
       pathname: "/",
@@ -55,7 +57,13 @@ const Explore = (props) => {
         <FilterHeader />
         <CardContainer>
           {openingList.map((l, idx) => {
-            return <Card key={idx} {...l} />;
+            return (
+              <Card
+                key={idx}
+                {...l}
+                _onClick={() => moveDetailPage(l.openingId)}
+              />
+            );
           })}
         </CardContainer>
       </Container>

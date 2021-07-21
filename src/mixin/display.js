@@ -9,8 +9,9 @@ const onlyMobile = css`
 
 const hiddenMobile = css`
   display: none;
+
   ${({ theme }) => theme.device.tablet} {
-    display: initial;
+    display: block;
   }
 `;
 

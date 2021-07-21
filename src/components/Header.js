@@ -10,13 +10,12 @@ import IconBtn from "../elements/IconBtn";
 
 const Header = (props) => {
   // history 객체 받아서 링크 연결해주기
-
   const [isLogin, setIsLogin] = useState(true);
 
   const menuList = [
     {
       name: "탐색",
-      path: "/",
+      path: "/explore",
     },
     { name: "커리어 성장" },
     { name: "직군별 연봉" },
@@ -35,7 +34,12 @@ const Header = (props) => {
         <Mid>
           <HomeBtn>홈</HomeBtn>
           {menuList.map((item, idx) => (
-            <TextBtn key={idx}>{item.name}</TextBtn>
+            <TextBtn
+              key={idx}
+              onClick={item.path ? () => history.push(item.path) : null}
+            >
+              {item.name}
+            </TextBtn>
           ))}
         </Mid>
         <Right>
@@ -100,6 +104,7 @@ const TextBtn = styled.button`
 const LogoBtn = styled.img`
   width: 75px;
   margin-right: 5px;
+  cursor: pointer;
 `;
 
 const HomeBtn = styled(TextBtn)`
