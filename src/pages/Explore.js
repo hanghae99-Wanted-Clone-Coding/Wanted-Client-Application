@@ -15,6 +15,7 @@ import {
   getCareerResultsDB,
 } from "../redux/modules/opening";
 import CareerModal from "../components/CareerModal";
+import JobGroups from "../components/JobGroups";
 
 const Explore = (props) => {
   const dispatch = useDispatch();
@@ -47,13 +48,15 @@ const Explore = (props) => {
 
   return (
     <>
-      <Slider />
+      {/* <Slider /> */}
 
       {/* ↓↓↓ 테스트버튼입니다 - 서버와 연결할 때 삭제 필요 */}
+      <br />
       <button onClick={() => clickJobGroup(id)}>테스트 버튼</button>
       {/* ↑↑↑ 테스트버튼입니다. */}
 
       <Container>
+        <JobGroups list={jobGroups} />
         <FilterHeader />
         <CardContainer>
           {openingList.map((l, idx) => {
