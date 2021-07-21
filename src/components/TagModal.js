@@ -46,7 +46,7 @@ const TagModal = ({ showModal, closeModal, isTag }) => {
   };
 
   const submitTags = () => {
-    dispatch(getTagResultsDB(choices));
+    dispatch(getTagResultsDB(choices[0]));
     closeModal();
   };
 

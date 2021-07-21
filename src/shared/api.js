@@ -19,8 +19,18 @@ export const apis = {
         "jobgroup-id": jobgroupId,
       },
     }),
-  getTagResults: (tagObj) => api.get(`/api`, tagObj),
-  getCareerResults: (career) => api.get(`opening/${career}`),
+  getTagResults: (tagName) =>
+    api.get(`/api/openings/`, {
+      params: {
+        tagName,
+      },
+    }),
+  getCareerResults: (career) =>
+    api.get(`/api/career/`, {
+      params: {
+        career,
+      },
+    }),
   getOpeningDetail: (openingId) => api.get(`/opening`),
   getRecommendedOpenings: () => api.get("/api/recommend"),
 };
