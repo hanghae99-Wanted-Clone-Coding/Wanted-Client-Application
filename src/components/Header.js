@@ -7,11 +7,13 @@ import { HiOutlineSearch } from "react-icons/hi";
 import { flex, hiddenMobile, onlyMobile } from "../mixin";
 import Logo from "../assets/wanted-logo.png";
 import IconBtn from "../elements/IconBtn";
+import { useSelector } from "react-redux";
 
 const Header = (props) => {
   // history 객체 받아서 링크 연결해주기
 
-  const [isLogin, setIsLogin] = useState(true);
+  const isLogin = useSelector((state) => state.user.is_login);
+  console.log(isLogin);
 
   const menuList = [
     {
@@ -91,6 +93,11 @@ const TextBtn = styled.button`
   font-size: 13px;
   font-weight: 600;
   border-bottom: 2px solid transparent;
+  transition: border-color 200ms ease-in-out;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border};
+  }
 
   ${({ theme }) => theme.device.tablet} {
     font-size: 14px;
