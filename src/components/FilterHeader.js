@@ -103,6 +103,7 @@ const Box = styled.div`
 `;
 
 const FilterBox = styled.div`
+  ${flex};
   width: 100%;
   @media screen and (max-width: 767px) {
     overflow-x: auto;
