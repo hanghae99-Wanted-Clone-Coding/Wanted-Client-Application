@@ -35,7 +35,6 @@ const JobGroups = ({ list }) => {
         if (idx >= imgAry.length) {
           bgIdx = idx - imgAry.length;
         }
-        console.log(item.name);
         return (
           <JobBtn key={item.groupId} bgImg={imgAry[bgIdx]}>
             <JobName>{item.name}</JobName>

@@ -91,7 +91,10 @@ export const getAllOpeningsDB =
   (dispatch, getState, { history }) => {
     apis
       .getAllOpenings()
-      .then((res) => dispatch(getAllOpenings(res.data)))
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getAllOpenings(openings));
+      })
       .catch((err) => console.log("공고 목록을 가져올 수 없습니다.", err));
   };
 
@@ -100,7 +103,10 @@ export const getJobgroupOpeningsDB =
   (dispatch, getState, { history }) => {
     apis
       .getJobGroupOpenings()
-      .then((res) => dispatch(getJobgroupOpenings(res.data)))
+      .then((res) => {
+        console.log(res);
+        // dispatch(getJobgroupOpenings(res.data))
+      })
       .catch((err) =>
         console.log("해당 직무의 공고 목록를 불러올 수 없습니다.", err)
       );
