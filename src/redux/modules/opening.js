@@ -1,9 +1,13 @@
+import axios from "axios";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
 import { apis } from "../../shared/api";
 
 // action type
 const TOGGLE_LIKE = "opening/TOGGLE_LIKE";
+const UP_LIKE = "opening/UP_LIKE";
+const DOWN_LIKE = "opening/DOWN_LIKE";
+
 const GET_JOBGROUPS = "opening/GET_JOBGROUPS";
 const GET_TAGS = "opening/GET_TAGS";
 const GET_SECOND_TAGS = "opening/GET_SECOND_TAGS";
@@ -16,10 +20,19 @@ const GET_RECOMMENDED_OPENINGS = "opening/GET_RECOMMENDED_OPENINGS";
 const REMOVE_CURRENT_OPENING = "opening/REMOVE_CURRENT_OPENING";
 
 // action creator
-const toggleLike = createAction(TOGGLE_LIKE, (openings_id, is_like) => ({
-  openings_id,
-  is_like,
+const toggleLike = createAction(TOGGLE_LIKE, (openingId) => ({
+  openingId,
+  
 }));
+
+const upLike = createAction(UP_LIKE, (openingId) => ({
+  openingId,
+}));
+
+const downLike = createAction(DOWN_LIKE, (openingId) => ({
+  openingId,
+}));
+
 const getJobgroups = createAction(GET_JOBGROUPS, (jobgroups) => ({
   jobgroups,
 }));
@@ -54,15 +67,125 @@ const initialState = {
   openings: [],
   recommendedOpenings: [],
   currentOpening: {},
+  
 };
 
 // thunk
 
-export const toggleLikeDB = (openings_id) => {
+// const setIsLike = () => {
+//   return function (dispatch, getState, {history}) {
+//     if(!getState().user.user) {
+//       return;
+//     }
+//     const _opening = getState().opening.openings[openingId];
+//     const userOpeningId = getState().user.user.openingLikes.filter(openingLike => _opening.openingId === openingLike.openingId);
+
+//     if(userOpeningId) {
+//       isLike : 
+//     }
+//   }
+// }
+export const upLikeDB = (openingId) => {
   return function (dispatch, getState, {history}) {
+    if(!getState().user.user){
+      return;
+    }
+
+    const _idx = getState().opening.openings.findIndex((o) => o.openingId === openingId);
+    const _opening = getState().opening.openings[_idx];
+    const _currentOpening = getState().opening.currentOpening;
+    const userOpeningId = getState().user.user.openingLikes.filter(openingLike => _opening.openingId === openingLike.openingId);
+    
+    if(userOpeningId.length > 0) {
+      //좋아요 취소
+      
+      
+        _opening.likeCount = _opening.likeCount - 1 < 0 ? _opening.likeCount : _opening.likeCount - 1;
+        _currentOpening.likeCnt = _currentOpening.likeCnt - 1 < 0 ? _opening.likeCount : _opening.likeCount - 1;
+        
+      }
+      
+
     
   }
 }
+
+export const downLikeDB = (openingId) => {
+  return function (dispatch, getState, {history}) {
+    if(!getState().user.user){
+      return;
+    }
+    const _idx = getState().opening.openings.findIndex((o) => o.openingId === openingId);
+    const _opening = getState().opening.openings[_idx];
+    const _currentOpening = getState().opening.currentOpening;
+    const userOpeningId = getState().user.user.openingLikes.filter(openingLike => _opening.openingId === openingLike.openingId);
+    
+    if(userOpeningId.length < 0) {
+      //좋아요 
+        _opening.likeCount = _opening.likeCount +1;
+        _currentOpening.likeCnt = _currentOpening.likeCnt +1;
+        
+      }
+      
+  }
+}
+
+
+export const toggleLikeDB = (openingId) => { //opening들의 인덱스
+  return function (dispatch, getState, {history}) {
+    if(!getState().user.user) {
+      return;
+    }
+
+    const _idx = getState().opening.openings.findIndex((o) => o.openingId === openingId);
+    // const _opening = getState().opening.openings[openingId];
+    const _opening = getState().opening.openings[_idx];
+
+    // 지현님께 물어보기...openingId 인덱스를 파라미터로 받아와도 openingId가 안되는 지 질문
+    //findindex 방법으로 코드 짜놓기
+    const _currentOpening = getState().opening.currentOpening;
+    const userOpeningId = getState().user.user.openingLikes.filter(openingLike => _opening.openingId === openingLike.openingId);
+
+    if(userOpeningId.length > 0) {
+      //좋아요 취소
+      axios({
+        method: "PUT",
+        url: `/api/openings${openingId}/likes`,
+        // header: {'Authorization'}
+        //도움 요청
+      })
+      .then((res) => {
+        console.log("좋아요 취소 성공");
+        _opening.likeCount = _opening.likeCount - 1 < 0 ? _opening.likeCount : _opening.likeCount - 1;
+        _currentOpening.likeCnt = _currentOpening.likeCnt - 1 < 0 ? _opening.likeCount : _opening.likeCount - 1;
+        dispatch(toggleLike(openingId));
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('좋아요 취소 실패, 에러');
+      })
+    }else{
+      axios({
+        method: "POST",
+        url: `/api/openings${openingId}/likes`,
+      })
+      .then((res) => {
+        console.log("좋아요 성공");
+        _opening.likeCount = _opening.likeCount + 1;
+        _currentOpening.likeCnt = _currentOpening.likeCnt + 1;
+        dispatch(toggleLike(openingId));
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("좋아요 실패, 에러");
+      })
+      
+    }
+    
+  }
+}
+
+
 
 export const getJobgroupsDB =
   () =>
@@ -161,7 +284,15 @@ export const getCareerResultsDB =
 // reducer
 export default handleActions(
   {
-    [TOGGLE_LIKE]: (state, action) => produce(state, (draft) => {}),
+    [TOGGLE_LIKE]: (state, action) => 
+    produce(state, (draft) => {
+      let idx = draft.openings.findIndex((o) => o.openingId === action.payload.openingId);
+      draft.openings[idx] = {...draft.opening[idx], ...action.payload.opening};
+      
+    }),
+
+    []
+
     [GET_TAGS]: (state, action) =>
       produce(state, (draft) => {
         draft.tags = action.payload.tags;

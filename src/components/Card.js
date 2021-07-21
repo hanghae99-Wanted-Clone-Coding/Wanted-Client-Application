@@ -7,6 +7,7 @@ import LikeBtn from "../elements/LikeBtn";
 const Card = (props) => {
 
     const [isLogin, setIsLogin] = useState(true);
+    // const is_like = useSelector((state) => state.)
 
     if(!isLogin){
       return(

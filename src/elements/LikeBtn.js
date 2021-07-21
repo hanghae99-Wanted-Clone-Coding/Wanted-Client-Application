@@ -4,14 +4,26 @@ import { TiHeart } from "react-icons/ti";
 import { flex } from "../mixin";
 
 const LikeBtn = (props) => {
-    const {children} = props;
+    const {_onClick, isLike, children} = props;
+
+    const styles = {
+        isLike: isLike,
+    }
+    
     return(
 
-        <Btn>
-            <Like />
+        <Btn onClick={_onClick}>
+            <Like {...styles} />
             {children}
         </Btn>
     );
+}
+
+LikeBtn.defaultProps = {
+    children: null,
+    _onClick: () => {},
+    isLike: false,
+    color: `${({ theme }) => theme.colors.heartGray}`,
 }
 
 const Btn = styled.button`
@@ -39,7 +51,9 @@ const Btn = styled.button`
 
 const Like = styled(TiHeart)`
     font-size: 22px;
-    color: ${({ theme }) => theme.colors.heartGray};
+    // color: ${({ theme }) => theme.colors.heartGray};
+    // color: red;
+    ${(props) => (props.isLike ? `color: red;` : `color: ${({ theme }) => theme.colors.heartGray}`)};
 `;
 
 export default LikeBtn;

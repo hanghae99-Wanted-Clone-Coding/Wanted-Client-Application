@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { container } from "../mixin/container";
 import { history } from "../redux/configStore";
@@ -18,8 +18,13 @@ import CareerModal from "../components/CareerModal";
 
 const Explore = (props) => {
   const dispatch = useDispatch();
+  const [isLike, setIsLike] = useState(false);
+
   const jobGroups = useSelector((state) => state.opening.jobGroups) || [];
   const openingList = useSelector((state) => state.opening.openings) || [];
+
+  const userOpenings = useSelector((state) => state.user.user.openingLikes)
+  
 
   useEffect(() => {
     dispatch(getJobgroupsDB());
@@ -43,6 +48,7 @@ const Explore = (props) => {
     dispatch(getCareerResultsDB(career));
   };
 
+  
   return (
     <>
       <Slider />
@@ -55,8 +61,21 @@ const Explore = (props) => {
         <FilterHeader />
         <CardContainer>
           {openingList.map((l, idx) => {
-            return <Card key={idx} {...l} />;
+            
+              const userOpeningId = userOpenings.filter(userOpening => 
+                l.openingId === userOpening.openingId);
+
+                if(userOpeningId.length > 0) {
+                  setIsLike(true);
+                }
+                else{
+                  setIsLike(false);
+                }
+               
+            
+            return <Card isLike={isLike} key={l.openingId} {...l} />;
           })}
+          {/* onClick={() => {props.history.push('/opening/'+ openingId);}} */}
         </CardContainer>
       </Container>
     </>

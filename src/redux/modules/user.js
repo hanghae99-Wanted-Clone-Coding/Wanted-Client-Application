@@ -23,7 +23,7 @@ const loginDB = (code) => {
     axios({
       method: "GET",
       // url: `/api/login?code=${code}`,
-      url: `http://52.79.144.138:8080/api/user/${code}`, 
+      url: `http://52.79.144.138:8080/api/user/code=${code}`, 
       // 보내기로 약속한 url
     })
     .then((res) => {
@@ -32,13 +32,13 @@ const loginDB = (code) => {
       const ACCESS_TOKEN = res.data.accessToken;
 
       setCookie("is_login", `${ACCESS_TOKEN}`);
-      history.replace("/");
+      // history.replace("/");
       window.alert("성공");
     })
     .catch((err) => {
       console.log(err);
       window.alert("로그인에 실패하였습니다")
-      history.replace("/");
+      // history.replace("/");
     })
   }
 }
