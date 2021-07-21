@@ -5,30 +5,26 @@ import Reward from "../components/Reward";
 import { flexColumn } from "../mixin";
 
 const OpeningHeader = (props) => {
-  // 테스트 태그
-  const tags = [
-    { tagName: "연봉업계평균이상" },
-    { tagName: "인원급성장" },
-    { tagName: "50명이하" },
-    { tagName: "설립3년이하" },
-    { tagName: "상여금" },
-    { tagName: "육아휴직" },
-    { tagName: "물류, 운송" },
-    { tagName: "자율복장" },
-    { tagName: "석식제공" },
-  ];
+  const { title, companyName: company, location, tags } = props;
 
   return (
     <Box>
-      <Title>Data Scientist (데이터 사이언티스트)</Title>
+      <Title>{title}</Title>
       <CompanyInfo>
-        <Company>보이스루</Company>
-        <Location>서울 · 한국</Location>
+        <Company>{company}</Company>
+        <Location>{location}</Location>
       </CompanyInfo>
       <Tags tags={tags} />
       <Reward />
     </Box>
   );
+};
+
+OpeningHeader.defaultProps = {
+  title: "",
+  companyName: "",
+  location: "",
+  tags: [],
 };
 
 const Box = styled.div`

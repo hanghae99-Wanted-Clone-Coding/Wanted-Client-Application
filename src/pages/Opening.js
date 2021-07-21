@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import OpeningHeader from "../components/OpeningHeader";
 import OpeningBody from "../components/OpeningBody";
@@ -6,29 +7,58 @@ import OpeningBody from "../components/OpeningBody";
 import Image from "../elements/Image";
 import { container, flex, onlyDesktop } from "../mixin";
 import RewardAside from "../components/RewardAside";
+import {
+  getOpeningDetailDB,
+  removeCurrentOpening,
+} from "../redux/modules/opening";
 
 const Opening = (props) => {
-  return (
-    <Container>
-      <LeftBox>
-        <ImageContainer>
-          <Image
-            src={
-              "https://static.wanted.co.kr/images/company/6905/edqjuddenbz0tnqt__1080_790.jpg"
-            }
-            alt="공고사진"
-          />
-        </ImageContainer>
-        <ContentBox>
-          <OpeningHeader />
-          <OpeningBody />
-        </ContentBox>
-      </LeftBox>
-      <RightBox>
-        <RewardAside />
-      </RightBox>
-    </Container>
-  );
+  const {
+    match: { params: openingId },
+  } = props;
+
+  const dispatch = useDispatch();
+
+  const openingData =
+    useSelector((state) => state.opening.currentOpening) || null;
+
+  useEffect(() => {
+    dispatch(getOpeningDetailDB(parseInt(openingId)));
+    return () => dispatch(removeCurrentOpening());
+  }, []);
+
+  if (openingData) {
+    const {
+      title,
+      companyName,
+      content,
+      imgUrl,
+      location,
+      locationDetail,
+      tags,
+      likeCnt,
+    } = openingData;
+    const HeaderInfo = { title, companyName, location, tags };
+    const BodyInfo = { companyName, content, locationDetail };
+    return (
+      <Container>
+        <LeftBox>
+          <ImageContainer>
+            {imgUrl && <Image src={imgUrl} alt="공고사진" />}
+          </ImageContainer>
+          <ContentBox>
+            <OpeningHeader {...HeaderInfo} />
+            <OpeningBody {...BodyInfo} />
+          </ContentBox>
+        </LeftBox>
+        <RightBox>
+          <RewardAside like={likeCnt} />
+        </RightBox>
+      </Container>
+    );
+  }
+
+  return <></>;
 };
 
 const Container = styled.main`

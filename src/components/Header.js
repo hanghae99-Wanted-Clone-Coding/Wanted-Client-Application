@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { history } from "../redux/configStore";
 import { container } from "../mixin";
 import { VscBell, VscMenu } from "react-icons/vsc";
 import { HiOutlineSearch } from "react-icons/hi";
@@ -28,7 +29,7 @@ const Header = (props) => {
     <Container>
       <Content>
         <Left>
-          <LogoBtn src={Logo} alt="원티드" />
+          <LogoBtn src={Logo} alt="원티드" onClick={() => history.push("/")} />
         </Left>
 
         <Mid>
