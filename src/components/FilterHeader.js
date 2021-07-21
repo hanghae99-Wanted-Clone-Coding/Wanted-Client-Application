@@ -7,12 +7,14 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 import TagModal from "./TagModal";
 import LoginModal from "./modal/LoginModal";
 import CareerModal from "./CareerModal";
+import { useSelector } from "react-redux";
 
 const FilterHeader = () => {
+  const isLogin = useSelector((state) => state.user.is_login) || false;
   const [showModal, setShowModal] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   const [isTag, setIsTag] = useState(false);
   const [isCareer, setIsCareer] = useState(false);
+  const [currentCareer, setCurrentCareer] = useState("전체");
 
   const openTagModal = () => {
     setIsTag(true);
@@ -33,21 +35,17 @@ const FilterHeader = () => {
   return (
     <>
       {isTag && isLogin && (
-        <TagModal
-          isTag={isTag}
-          showModal={showModal}
-          closeModal={closeModal}
-        ></TagModal>
+        <TagModal isTag={isTag} showModal={showModal} closeModal={closeModal} />
       )}
       {isCareer && isLogin && (
         <CareerModal
           showModal={showModal}
           closeModal={closeModal}
-        ></CareerModal>
+          current={currentCareer}
+          _onSubmit={(career) => setCurrentCareer(career)}
+        />
       )}
-      {!isLogin && (
-        <LoginModal showModal={showModal} closeModal={closeModal}></LoginModal>
-      )}
+      {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
       <Container>
         <Box>
           <FilterBox>
@@ -62,16 +60,14 @@ const FilterHeader = () => {
             <FilterBtn width="120px">
               <Text margin="0 8px 0 0">지역</Text>
               <Text bold color="#3366FF">
-                {" "}
-                한국{" "}
+                한국
               </Text>
               <DownMark />
             </FilterBtn>
             <FilterBtn _onClick={openCareerModal} width="120px">
               <Text margin="0 8px 0 0">경력</Text>
               <Text bold color="#3366FF">
-                {" "}
-                신입{" "}
+                {currentCareer}
               </Text>
               <DownMark />
             </FilterBtn>

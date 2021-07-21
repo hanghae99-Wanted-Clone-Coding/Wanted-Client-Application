@@ -210,13 +210,20 @@ const ModalContainer = styled.div`
 `;
 
 const ModalOverlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  display: none;
+
+  ${({ theme }) => theme.device.tablet} {
+    position: absolute;
+    display: initial;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
 `;
 
 const ModalContent = styled.div`
+  width: 100%;
+  height: 100%;
   background-color: white;
   text-align: center;
   border-radius: 10px;
@@ -224,6 +231,7 @@ const ModalContent = styled.div`
 
   ${({ theme }) => theme.device.tablet} {
     width: 400px;
+    height: initial;
     overflow-y: auto;
     min-height: 750px;
     position: relative;
@@ -232,10 +240,11 @@ const ModalContent = styled.div`
 `;
 
 const ModalHeader = styled.div`
+  ${flex};
   padding: 16px 20px;
+
   ${({ theme }) => theme.device.tablet} {
     width: 400px;
-    ${flex};
     justify-content: space-between;
   }
 `;
