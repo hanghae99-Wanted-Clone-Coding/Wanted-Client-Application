@@ -38,14 +38,6 @@ const Explore = (props) => {
   };
   const id = 1;
 
-  const clickCareer = (career) => {
-    history.push({
-      pathname: "/",
-      search: `?career=${career}`,
-    });
-    dispatch(getCareerResultsDB(career));
-  };
-
   return (
     <>
       {/* <Slider /> */}

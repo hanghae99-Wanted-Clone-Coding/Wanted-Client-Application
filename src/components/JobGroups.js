@@ -1,13 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 import Slider from "react-slick";
 import { container, flex } from "../mixin";
-import { BsChevronLeft } from "react-icons/bs";
+// import { BsChevronLeft } from "react-icons/bs";
 import { imgAry } from "../assets/btnImgs/index";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getJobgroupOpeningsDB } from "../redux/modules/opening";
 
 const JobGroups = ({ list }) => {
+  const dispatch = useDispatch();
   // const ArrowLeft = (props) => {
   //   return (
   //     <button {...props} className="slick-prev slick-arrow">
@@ -19,13 +22,17 @@ const JobGroups = ({ list }) => {
   const settings = {
     dots: false,
     arrows: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     initialSlide: 0,
-    slidesToShow: 6,
-    slidesToScroll: 5,
+    slidesToShow: 4,
+    slidesToScroll: 3,
     // prevArrow: <ArrowLeft />,
     // nextArrow: <BsChevronLeft />,
+  };
+
+  const clickJobGroup = (id) => {
+    dispatch(getJobgroupOpeningsDB(id));
   };
 
   return (
@@ -36,7 +43,11 @@ const JobGroups = ({ list }) => {
           bgIdx = idx - imgAry.length;
         }
         return (
-          <JobBtn key={item.jobGroupId} bgImg={imgAry[bgIdx]}>
+          <JobBtn
+            key={item.groupId}
+            bgImg={imgAry[bgIdx]}
+            onClick={() => clickJobGroup(item.groupId)}
+          >
             <JobName>{item.name}</JobName>
           </JobBtn>
         );
@@ -57,6 +68,10 @@ const Btns = styled(Slider)`
     overflow: hidden;
     height: 60px;
   }
+
+  .slick-list {
+    min-width: 100%;
+  }
 `;
 
 const JobBtn = styled.button`
@@ -72,6 +87,7 @@ const JobBtn = styled.button`
   background-size: cover;
   border-radius: 3px;
   font-weight: 700;
+  word-break: keep-all;
 
   &::after {
     content: "";
