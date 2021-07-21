@@ -16,7 +16,10 @@ const GET_RECOMMENDED_OPENINGS = "opening/GET_RECOMMENDED_OPENINGS";
 const REMOVE_CURRENT_OPENING = "opening/REMOVE_CURRENT_OPENING";
 
 // action creator
-const toggleLike = createAction(TOGGLE_LIKE);
+const toggleLike = createAction(TOGGLE_LIKE, (openings_id, is_like) => ({
+  openings_id,
+  is_like,
+}));
 const getJobgroups = createAction(GET_JOBGROUPS, (jobgroups) => ({
   jobgroups,
 }));
@@ -54,6 +57,13 @@ const initialState = {
 };
 
 // thunk
+
+export const toggleLikeDB = (openings_id) => {
+  return function (dispatch, getState, {history}) {
+    
+  }
+}
+
 export const getJobgroupsDB =
   () =>
   (dispatch, getState, { history }) => {
@@ -145,6 +155,8 @@ export const getCareerResultsDB =
       .then((res) => dispatch(getCareerResults(res.data)))
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
+
+
 
 // reducer
 export default handleActions(
