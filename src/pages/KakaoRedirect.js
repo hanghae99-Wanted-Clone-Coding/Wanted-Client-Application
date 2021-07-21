@@ -8,13 +8,14 @@ const KakaoRedirect = (props) => {
     //Redirect_url 뒤에 파라미터로 넘어오는 인가 코드
     let code = new URL(window.location.href).searchParams.get("code");
 
-    React.useEffect(() => {
-        dispatch(loginAction.loginDB(code));
-    }, []);
-
-    //     React.useEffect(async () => {
-    //     await dispatch(loginAction.loginDB(code));
+    // React.useEffect(() => {
+    //     dispatch(loginAction.loginDB(code));
+    //     // console.log(code);
     // }, []);
+
+        React.useEffect(async () => {
+        await dispatch(loginAction.loginDB(code));
+    }, []);
 
     return null;
 

@@ -20,7 +20,7 @@ const LoginModal = (props) => {
     const dispatch = useDispatch();
     const handleClick = (e) => {
         // window.location.href = {KAKAO_AUTH_URL}
-        window.open("https://kauth.kakao.com/oauth/authorize?client_id=bd18ffc2815bc827028cae45eaba9fdc&redirect_uri=http://localhost:3000/user/kakao/callback&response_type=code", "카카오로 로그인하기", "fullscreen");
+        window.open("https://kauth.kakao.com/oauth/authorize?client_id=bd18ffc2815bc827028cae45eaba9fdc&redirect_uri=http://52.79.144.138:8080/user/kakao/callback&response_type=code", "카카오로 로그인하기", "fullscreen");
         // history.push("https://kauth.kakao.com/oauth/authorize?client_id=bd18ffc2815bc827028cae45eaba9fdc&redirect_uri=http://localhost:3000/user/kakao/callback&response_type=code");
     
     }

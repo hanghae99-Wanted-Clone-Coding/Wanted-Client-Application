@@ -21,9 +21,9 @@ const initialState = {
 const loginDB = (code) => {
   return function (dispatch, getState, {history}) {
     axios({
-      method: "POST",
-      // url: `localhost:3000/api/login?code=${code}`,
-      url: `localhost:3000/user/kakao/callback?code=${code}`, 
+      method: "GET",
+      // url: `/api/login?code=${code}`,
+      url: `http://52.79.144.138:8080/api/user/${code}`, 
       // 보내기로 약속한 url
     })
     .then((res) => {
@@ -33,6 +33,7 @@ const loginDB = (code) => {
 
       setCookie("is_login", `${ACCESS_TOKEN}`);
       history.replace("/");
+      window.alert("성공");
     })
     .catch((err) => {
       console.log(err);
