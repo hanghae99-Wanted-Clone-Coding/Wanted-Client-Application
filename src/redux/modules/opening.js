@@ -59,7 +59,10 @@ export const getJobgroupsDB =
   (dispatch, getState, { history }) => {
     apis
       .getJobgroups()
-      .then((res) => dispatch(getJobgroups(res.data)))
+      .then((res) => {
+        const { data: jobgroups } = res;
+        dispatch(getJobgroups(jobgroups));
+      })
       .catch((err) =>
         console.log("직무 그룹 리스트를 불러올 수 없습니다.", err)
       );

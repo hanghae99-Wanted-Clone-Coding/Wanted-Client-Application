@@ -19,11 +19,11 @@ const JobGroups = ({ list }) => {
   const settings = {
     dots: false,
     arrows: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     initialSlide: 0,
-    slidesToShow: 6,
-    slidesToScroll: 5,
+    slidesToShow: 4,
+    slidesToScroll: 3,
     // prevArrow: <ArrowLeft />,
     // nextArrow: <BsChevronLeft />,
   };
@@ -35,8 +35,9 @@ const JobGroups = ({ list }) => {
         if (idx >= imgAry.length) {
           bgIdx = idx - imgAry.length;
         }
+        console.log(item.name);
         return (
-          <JobBtn key={item.jobGroupId} bgImg={imgAry[bgIdx]}>
+          <JobBtn key={item.groupId} bgImg={imgAry[bgIdx]}>
             <JobName>{item.name}</JobName>
           </JobBtn>
         );
@@ -57,6 +58,10 @@ const Btns = styled(Slider)`
     overflow: hidden;
     height: 60px;
   }
+
+  .slick-list {
+    min-width: 100%;
+  }
 `;
 
 const JobBtn = styled.button`
@@ -72,6 +77,7 @@ const JobBtn = styled.button`
   background-size: cover;
   border-radius: 3px;
   font-weight: 700;
+  word-break: keep-all;
 
   &::after {
     content: "";
