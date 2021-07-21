@@ -6,6 +6,8 @@ import { flex } from "../mixin";
 import { VscBookmark } from "react-icons/vsc";
 
 const RewardAside = (props) => {
+  const { like } = props;
+
   return (
     <RewardBox>
       <Title>채용보상금</Title>
@@ -20,9 +22,13 @@ const RewardAside = (props) => {
         </OutlineBtn>
         <FillBtn>지원하기</FillBtn>
       </Btns>
-      <HeartBtn />
+      <HeartBtn heartNum={like} />
     </RewardBox>
   );
+};
+
+RewardAside.defaultProps = {
+  like: 0,
 };
 
 const RewardBox = styled.div`

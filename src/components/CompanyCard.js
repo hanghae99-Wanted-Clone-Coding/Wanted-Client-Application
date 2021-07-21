@@ -5,6 +5,7 @@ import Image from "../elements/Image";
 import { flex, flexColumn } from "../mixin";
 
 const CompanyCard = (props) => {
+  const { company } = props;
   return (
     <Container>
       <Left>
@@ -14,7 +15,7 @@ const CompanyCard = (props) => {
           shape="square"
         />
         <TextBox>
-          <Company>보이스루</Company>
+          <Company>{company}</Company>
           <Category>IT, 컨텐츠</Category>
         </TextBox>
       </Left>
@@ -23,6 +24,10 @@ const CompanyCard = (props) => {
       </Right>
     </Container>
   );
+};
+
+CompanyCard.defaultProps = {
+  company: "",
 };
 
 const Container = styled.article`
