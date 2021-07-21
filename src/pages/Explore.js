@@ -14,6 +14,7 @@ import {
   getJobgroupOpeningsDB,
   getCareerResultsDB,
 } from "../redux/modules/opening";
+import CareerModal from "../components/CareerModal";
 
 const Explore = (props) => {
   const dispatch = useDispatch();
@@ -52,8 +53,6 @@ const Explore = (props) => {
 
       <Container>
         <FilterHeader />
-        <TagModal />
-        {/* <LoginModal></LoginModal> */}
         <CardContainer>
           {openingList.map((l, idx) => {
             return <Card key={idx} {...l} />;
