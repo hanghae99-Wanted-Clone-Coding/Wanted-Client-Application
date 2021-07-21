@@ -4,7 +4,7 @@ import Box from "../elements/Box";
 import Text from "../elements/Text";
 import Tag from "../elements/Tag";
 import { flex } from "../mixin";
-import {GrClose} from "react-icons/gr";
+import { GrClose } from "react-icons/gr";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getSecondTagsDB,
@@ -12,7 +12,7 @@ import {
   getTagsDB,
 } from "../redux/modules/opening";
 
-const TagModal = () => {
+const TagModal = ({ showModal, closeModal, isTag }) => {
   const dispatch = useDispatch();
   const categoryList = useSelector((state) => state.opening.tags) || [];
   const secondTags = useSelector((state) => state.opening.secondTag) || [];
@@ -46,57 +46,58 @@ const TagModal = () => {
   };
 
   return (
-    <>{showModal ?
-        (
-           <ModalContainer>
-            <ModalOverlay onClick={closeModal} />
-            <ModalContent>
-              <ModalHeader>
-                <button>초기화</button>
-                <button>태그</button>
-                <button onClick={closeModal}><GrClose /></button>
-              </ModalHeader>
-              <ModalBody>
-                <Box>
-                  <h2>
-                    기업의 특별한 복지, 혜택 등 태그를 선택하여
-                    <br />
-                    나에게 꼭 맞는 포지션을 찾아보세요!
-                  </h2>
+    <>
+      {showModal ? (
+        <ModalContainer>
+          <ModalOverlay onClick={closeModal} />
+          <ModalContent>
+            <ModalHeader>
+              <button>초기화</button>
+              <button>태그</button>
+              <button onClick={closeModal}>
+                <GrClose />
+              </button>
+            </ModalHeader>
+            <ModalBody>
+              <Box>
+                <h2>
+                  기업의 특별한 복지, 혜택 등 태그를 선택하여
                   <br />
-                  <Box>
-                    <h3>1. 카테고리 선택</h3>
-                    <CategoriBox>
-                      {categoryList.map((item, idx) => (
-                        <li key={idx} onClick={() => clickCategory(item.tagId)}>
-                          <CategoriBtn>{item.name}</CategoriBtn>
-                        </li>
-                      ))}
-                    </CategoriBox>
-                  </Box>
-                  <Box>
-                    <h3>2. 태그 선택</h3>
-                    <TagBox>
-                      {secondTags.map((item, idx) => (
-                        <li key={idx} onClick={() => choiceTag(item.name)}>
-                          <Tag name={item.name} />
-                        </li>
-                      ))}
-                    </TagBox>
-                  </Box>
+                  나에게 꼭 맞는 포지션을 찾아보세요!
+                </h2>
+                <br />
+                <Box>
+                  <h3>1. 카테고리 선택</h3>
+                  <CategoriBox>
+                    {categoryList.map((item, idx) => (
+                      <li key={idx} onClick={() => clickCategory(item.tagId)}>
+                        <CategoriBtn>{item.name}</CategoriBtn>
+                      </li>
+                    ))}
+                  </CategoriBox>
                 </Box>
-              </ModalBody>
-              <ModalFooter>
-                <SelectedTags></SelectedTags>
-                <ConfirmBtn onClick={submitTags}>확인</ConfirmBtn>
-              </ModalFooter>
-            </ModalContent>
-          </ModalContainer>
-        : null
-        }
-      </>
-    );
-  };
+                <Box>
+                  <h3>2. 태그 선택</h3>
+                  <TagBox>
+                    {secondTags.map((item, idx) => (
+                      <li key={idx} onClick={() => choiceTag(item.name)}>
+                        <Tag name={item.name} />
+                      </li>
+                    ))}
+                  </TagBox>
+                </Box>
+              </Box>
+            </ModalBody>
+            <ModalFooter>
+              <SelectedTags></SelectedTags>
+              <ConfirmBtn onClick={submitTags}>확인</ConfirmBtn>
+            </ModalFooter>
+          </ModalContent>
+        </ModalContainer>
+      ) : null}
+    </>
+  );
+};
 
 const ModalContainer = styled.div`
   position: fixed;
