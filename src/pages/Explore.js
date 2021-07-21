@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
-import LoginModal from "../components/LoginModal";
+import LoginModal from "../components/modal/LoginModal";
 import {
   getJobgroupsDB,
   getAllOpeningsDB,
