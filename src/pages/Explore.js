@@ -12,6 +12,7 @@ import {
   getJobgroupsDB,
   getAllOpeningsDB,
   getJobgroupOpeningsDB,
+  getCareerResultsDB,
 } from "../redux/modules/opening";
 
 const Explore = (props) => {
@@ -32,6 +33,14 @@ const Explore = (props) => {
     dispatch(getJobgroupOpeningsDB(jobGroupId));
   };
   const id = 1;
+
+  const clickCareer = (career) => {
+    history.push({
+      pathname: "/",
+      search: `?career=${career}`,
+    });
+    dispatch(getCareerResultsDB(career));
+  };
 
   return (
     <>
