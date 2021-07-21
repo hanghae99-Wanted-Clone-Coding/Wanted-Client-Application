@@ -12,7 +12,7 @@ import {
   getTagsDB,
 } from "../redux/modules/opening";
 
-const TagModal = () => {
+const TagModal = ({showModal, closeModal}) => {
   const dispatch = useDispatch();
   const categoryList = useSelector((state) => state.opening.tags) || [];
   const secondTags = useSelector((state) => state.opening.secondTag) || [];
@@ -91,7 +91,7 @@ const TagModal = () => {
                 <ConfirmBtn onClick={submitTags}>확인</ConfirmBtn>
               </ModalFooter>
             </ModalContent>
-          </ModalContainer>
+          </ModalContainer>)
         : null
         }
       </>
