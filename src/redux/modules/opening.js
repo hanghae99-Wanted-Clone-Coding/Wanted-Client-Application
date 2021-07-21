@@ -104,8 +104,8 @@ export const getJobgroupOpeningsDB =
     apis
       .getJobGroupOpenings()
       .then((res) => {
-        console.log(res);
-        // dispatch(getJobgroupOpenings(res.data))
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getJobgroupOpenings(openings));
       })
       .catch((err) =>
         console.log("해당 직무의 공고 목록를 불러올 수 없습니다.", err)

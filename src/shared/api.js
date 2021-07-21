@@ -13,8 +13,12 @@ export const apis = {
   getTags: () => api.get("/api/tag-categories"),
   getSecondTags: (tagCategoryId) => api.get(`/api/tags/${tagCategoryId}`),
   getAllOpenings: () => api.get("/api/openings"),
-  // getJobGroupOpenings: (jobgroupId) => api.get(`/api/openings/${jobgroupId}`),
-  getJobGroupOpenings: (jobgroupId) => api.get(`/jobGroupOpenings`),
+  getJobGroupOpenings: (jobgroupId) =>
+    api.get(`/api/openings/`, {
+      params: {
+        "jobgroup-id": jobgroupId,
+      },
+    }),
   getTagResults: (tagObj) => api.get(`/api`, tagObj),
   getCareerResults: (career) => api.get(`opening/${career}`),
   getOpeningDetail: (openingId) => api.get(`/opening`),
