@@ -10,10 +10,8 @@ const api = axios.create({
 
 export const apis = {
   getJobgroups: () => api.get("/api/job-groups"),
-  // getTags: () => api.get("/api/tags"),
-  getTags: () => api.get("/tags"),
-  // getSecondTags: (tagCategoryId) => api.get(`/api/tags/${tagCategoryId}`),
-  getSecondTags: (tagCategoryId) => api.get(`/secondTags`),
+  getTags: () => api.get("/api/tag-categories"),
+  getSecondTags: (tagCategoryId) => api.get(`/api/tags/${tagCategoryId}`),
   getAllOpenings: () => api.get("/openings"),
   // getJobGroupOpenings: (jobgroupId) => api.get(`/api/openings/${jobgroupId}`),
   getJobGroupOpenings: (jobgroupId) => api.get(`/jobGroupOpenings`),
