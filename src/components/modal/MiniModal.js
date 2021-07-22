@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../redux/configStore";
 import styled from "styled-components";
 import {container} from "../../mixin";
@@ -13,6 +13,7 @@ import Logo from "../../assets/wanted-logo.png";
 
 const MiniModal = ({ showModal, closeModal, current, _onSubmit }) => {
   const dispatch = useDispatch();
+  
 
   const clickLogout = () => {
       dispatch(userActions.logoutDB());
@@ -37,7 +38,9 @@ const MiniModal = ({ showModal, closeModal, current, _onSubmit }) => {
                </HiddenDiv>
            </HiddenHeader>
             <ModalHeader>
-                <Btn><Word>MY 원티드</Word></Btn>
+                <Btn onClick={() => {
+                  history.push("/mypage");
+                }}><Word>MY 원티드</Word></Btn>
                 <Btn><Word>프로필</Word></Btn>
             </ModalHeader>
             <ModalBody>
