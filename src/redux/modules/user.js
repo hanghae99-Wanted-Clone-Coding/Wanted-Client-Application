@@ -1,7 +1,7 @@
 import { apis } from "../../shared/api";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
-import { setCookie, getCookie, deleteCookie } from "../../shared/cookie";
+import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
 // action type
 const SET_USER = "user/SET_USER";
@@ -82,7 +82,7 @@ export default handleActions(
       }),
     [LOGOUT]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("is_login");
+        deleteCookie("isLogin");
         draft.user = {};
         draft.is_login = false;
       }),
