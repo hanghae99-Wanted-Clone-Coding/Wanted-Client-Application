@@ -11,7 +11,7 @@ const Tags = (props) => {
     <Container>
       {tags.map((item, idx) => (
         <li key={idx}>
-          <Tag name={item.tagName} />
+          <Tag name={item.tagName || item.name} />
         </li>
       ))}
     </Container>

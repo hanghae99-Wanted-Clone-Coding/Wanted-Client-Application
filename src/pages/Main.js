@@ -29,7 +29,7 @@ const Main = (props) => {
 
       <Desc>
         {descAry.map((desc, idx) => (
-          <DescBox obj={desc} />
+          <DescBox key={idx} obj={desc} />
         ))}
       </Desc>
     </Container>

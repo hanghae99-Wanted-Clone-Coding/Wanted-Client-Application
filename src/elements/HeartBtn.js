@@ -1,14 +1,36 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { TiHeart } from "react-icons/ti";
 import { flex } from "../mixin";
+import { toggleLikeDB } from "../redux/modules/opening";
+import { history } from "../redux/configStore";
 
 const HeartBtn = (props) => {
-  const { heartNum } = props;
+  const dispatch = useDispatch();
+
+  const pathnameAry = history.location.pathname.split("/");
+  const openingId = Number(pathnameAry[pathnameAry.length - 1]);
+
+  const { likeCnt } = useSelector((state) => state.opening.currentOpening) || 0;
+  const myLikeList = useSelector((state) => state.user.user.likeList) || [];
+  const isLogin = useSelector((state) => state.user.is_login);
+
+  let isLike =
+    myLikeList.findIndex((item) => item === openingId) !== -1 ? true : false;
+
+  const toggleLike = () => {
+    if (!isLogin) {
+      alert("로그인 한 회원만 좋아요가 가능합니다.");
+      return;
+    }
+    dispatch(toggleLikeDB(openingId, isLike));
+  };
+
   return (
-    <Btn>
-      <Heart />
-      <HeartNum>{heartNum}</HeartNum>
+    <Btn onClick={toggleLike}>
+      <Heart isLike={`${isLike}`} />
+      <HeartNum>{likeCnt}</HeartNum>
     </Btn>
   );
 };
@@ -28,6 +50,7 @@ const Btn = styled.button`
 
 const Heart = styled(TiHeart)`
   font-size: 22px;
+  color: ${({ isLike }) => (isLike === "true" ? "red" : "initial")};
 `;
 
 const HeartNum = styled.span`

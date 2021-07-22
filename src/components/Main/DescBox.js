@@ -10,8 +10,8 @@ const DescBox = (props) => {
     <Container>
       <Image src={src} size="100%" />
       <DescContainer>
-        {title.split("/").map((word) => (
-          <DescTitle>{word}</DescTitle>
+        {title.split("/").map((word, idx) => (
+          <DescTitle key={idx}>{word}</DescTitle>
         ))}
         {/* <DescTitle>{title.split("/").join("\n")}</DescTitle> */}
         <DescText>{description}</DescText>

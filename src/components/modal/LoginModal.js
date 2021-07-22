@@ -56,6 +56,7 @@ const LoginModal = (props) => {
     }
 
     dispatch(userActions.loginDB({ email, password }));
+    closeModal();
   };
 
   const clickSignUp = () => {
@@ -86,6 +87,7 @@ const LoginModal = (props) => {
     }
 
     dispatch(userActions.signUpDB({ name, email, password }));
+    closeModal();
   };
 
   return (

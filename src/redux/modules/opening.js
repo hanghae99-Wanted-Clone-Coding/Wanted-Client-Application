@@ -66,24 +66,20 @@ export const toggleLikeDB =
     // 이미 좋아요 한 상태
     if (isLike === true) {
       apis
-        .like(openingId)
+        .dislike(openingId)
         .then((res) => {
           dispatch(userRemoveLike(openingId));
           dispatch(removeLike(openingId));
         })
         .catch((err) => console.log("좋아요 취소가 반영되지 않았습니다.", err));
-      dispatch(userRemoveLike(openingId));
-      dispatch(removeLike(openingId));
     } else if (isLike === false) {
       apis
-        .dislike(openingId)
+        .like(openingId)
         .then((res) => {
           dispatch(userAddLike(openingId));
           dispatch(addLike(openingId));
         })
         .catch((err) => console.log("좋아요가 반영되지 않았습니다.", err));
-      dispatch(userAddLike(openingId));
-      dispatch(addLike(openingId));
     }
   };
 
@@ -125,8 +121,7 @@ export const getAllOpeningsDB =
     apis
       .getAllOpenings()
       .then((res) => {
-        const { openingApiResponses: openings } = res.data;
-        dispatch(getAllOpenings(openings));
+        dispatch(getAllOpenings(res.data));
       })
       .catch((err) => console.log("공고 목록을 가져올 수 없습니다.", err));
   };
@@ -137,8 +132,7 @@ export const getJobgroupOpeningsDB =
     apis
       .getJobGroupOpenings(jobGroupId)
       .then((res) => {
-        const { openingApiResponses: openings } = res.data;
-        dispatch(getJobgroupOpenings(openings));
+        dispatch(getJobgroupOpenings(res.data));
       })
       .catch((err) =>
         console.log("해당 직무의 공고 목록를 불러올 수 없습니다.", err)
@@ -154,8 +148,7 @@ export const getTagResultsDB =
     apis
       .getTagResults(tagName)
       .then((res) => {
-        const { openingApiResponses: openings } = res.data;
-        dispatch(getTagResults(openings));
+        dispatch(getTagResults(res.data));
       })
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
@@ -196,8 +189,7 @@ export const getCareerResultsDB =
     apis
       .getCareerResults(upperCareer)
       .then((res) => {
-        const { openingApiResponses: openings } = res.data;
-        dispatch(getCareerResults(openings));
+        dispatch(getCareerResults(res.data));
       })
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };

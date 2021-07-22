@@ -5,21 +5,22 @@ import Text from "../elements/Text";
 import LikeBtn from "../elements/LikeBtn";
 import { useDispatch } from "react-redux";
 import { toggleLikeDB } from "../redux/modules/opening";
+import { useSelector } from "react-redux";
 
 const Card = (props) => {
   const dispatch = useDispatch();
   const { title, imgUrl, likeCount, companyName, openingId, isLike, _onClick } =
     props;
-  const [isLogin, setIsLogin] = useState(true);
+  const isLogin = useSelector((state) => state.user.is_login);
 
   const clickHeart = (e) => {
     e.stopPropagation();
+    if (!isLogin) {
+      alert("로그인 한 회원만 좋아요가 가능합니다.");
+      return;
+    }
     dispatch(toggleLikeDB(openingId, isLike));
   };
-
-  if (!isLogin) {
-    return <Text>로그인 하시오 모달 창</Text>;
-  }
 
   return (
     <>
