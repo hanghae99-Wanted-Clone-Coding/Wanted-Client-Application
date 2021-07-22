@@ -12,22 +12,16 @@ import MiniModal from "./modal/MiniModal";
 import LoginModal from "./modal/MiniModal";
 
 const Header = (props) => {
-  // history 객체 받아서 링크 연결해주기
-
-  //테스트 때문에 임시 작성, 주석 풀고 밑의 useState 지워야함
   const isLogin = useSelector((state) => state.user.is_login);
-
-  console.log(isLogin);
-
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
-  }
+  };
 
   const closeModal = () => {
     setShowModal(false);
-  }
+  };
 
   const menuList = [
     {
@@ -43,12 +37,16 @@ const Header = (props) => {
 
   return (
     <>
-    {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
-    {isLogin && <MiniModal showModal={showModal} closeModal={closeModal}/>}
+      {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
+      {isLogin && <MiniModal showModal={showModal} closeModal={closeModal} />}
       <Container>
         <Content>
           <Left>
-            <LogoBtn src={Logo} alt="원티드" onClick={() => history.push("/")} />
+            <LogoBtn
+              src={Logo}
+              alt="원티드"
+              onClick={() => history.push("/")}
+            />
           </Left>
 
           <Mid>
@@ -65,8 +63,10 @@ const Header = (props) => {
           <Right>
             <IconBtn icon={<HiOutlineSearch />} />
             {isLogin && <IconBtn icon={<VscBell />} />}
-            {isLogin && <IconBtn _onClick={openModal} icon={<VscMenu /> } />}
-            {!isLogin && <ModalBtn onClick={openModal}>회원가입/로그인</ModalBtn>}
+            {isLogin && <IconBtn _onClick={openModal} icon={<VscMenu />} />}
+            {!isLogin && (
+              <ModalBtn onClick={openModal}>회원가입/로그인</ModalBtn>
+            )}
           </Right>
         </Content>
       </Container>
@@ -77,6 +77,11 @@ const Header = (props) => {
 const Container = styled.div`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: ${({ theme }) => theme.colors.white};
+  position: fixed;
+  top: 0;
+  left: 9;
+  z-index: 99;
 `;
 
 const Content = styled.div`
@@ -101,13 +106,13 @@ ${flex};
   -ms-overflow-style: none; } 
   &::-webkit-scrollbar { display: none; }
 
-  & > button:nth-child(3) {
+  & > button:nth-child(2) {
     border-color: ${({ theme }) => theme.colors.mainBlue};
   }
 `;
 
 const Right = styled.div`
-  display:flex;
+  display: flex;
   flex-shrink: 0;
 `;
 

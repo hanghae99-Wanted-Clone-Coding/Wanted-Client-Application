@@ -14,7 +14,9 @@ import {
 
 const Opening = (props) => {
   const {
-    match: { params: openingId },
+    match: {
+      params: { openingId },
+    },
   } = props;
 
   const dispatch = useDispatch();

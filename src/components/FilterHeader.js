@@ -84,6 +84,7 @@ const FilterHeader = () => {
 };
 
 const Container = styled.div`
+  min-width: 650px;
   padding-top: 30px;
   margin-bottom: 20px;
 `;

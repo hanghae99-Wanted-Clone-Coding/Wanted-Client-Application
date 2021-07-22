@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    padding-top: 80px;
     font-family: 'Nanum Gothic', sans-serif;
     color: ${({ theme }) => theme.colors.black};
 
