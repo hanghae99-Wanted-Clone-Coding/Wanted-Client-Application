@@ -1,16 +1,16 @@
 import { apis } from "../../shared/api";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
+import { setCookie, getCookie, deleteCookie } from "../../shared/cookie";
 
 // action type
-const LOGIN = "user/LOGIN";
+const SET_USER = "user/SET_USER";
 const LOGOUT = "user/LOGOUT";
 const ADD_LIKE = "user/ADD_LIKE";
 const REMOVE_LIKE = "user/REMOVE_LIKE";
 
 // action creator
-const login = createAction(LOGIN);
+const setUser = createAction(SET_USER, (user) => ({ user }));
 const logout = createAction(LOGOUT);
 export const userAddLike = createAction(ADD_LIKE, (openingId) => ({
   openingId,
@@ -30,28 +30,29 @@ const initialState = {
 };
 
 //middleware actions
+const setUserDB =
+  () =>
+  (dispatch, getState, { history }) => {
+    apis
+      .setUser()
+      .then((res) => dispatch(setUser(res.data)))
+      .catch((err) => console.log("유저 정보를 받아오지 못했습니다.", err));
+  };
+
 const loginDB =
   (infoObj) =>
   (dispatch, getState, { history }) => {
     apis
       .login(infoObj)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-
-    // .then((res) => {
-    //   console.log(res);
-
-    //   const ACCESS_TOKEN = res.data.accessToken;
-
-    //   setCookie("is_login", `${ACCESS_TOKEN}`);
-    //   history.replace("/");
-    //   window.alert("성공");
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    //   window.alert("로그인에 실패하였습니다");
-    //   history.replace("/");
-    // });
+      .then((res) => {
+        const accessToken = res.data.accessToken;
+        setCookie("isLogin", `${accessToken}`);
+      })
+      .then(() => dispatch(setUserDB()))
+      .catch((err) => {
+        alert("로그인에 실패했습니다.");
+        console.log(err);
+      });
   };
 
 const logoutDB = () => {
@@ -74,9 +75,8 @@ const signUpDB =
 // reducer
 export default handleActions(
   {
-    [LOGIN]: (state, action) =>
+    [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        setCookie("is_login", "success");
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
@@ -101,7 +101,6 @@ export default handleActions(
 );
 
 const actionCreators = {
-  login,
   logout,
   loginDB,
   logoutDB,
