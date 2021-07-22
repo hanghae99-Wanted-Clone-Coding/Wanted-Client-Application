@@ -4,10 +4,10 @@ import Image from "../elements/Image";
 import { flex, flexColumn } from "../mixin";
 
 const MyListCard = (props) => {
-  const { title, company, location, src } = props;
+  const { title, company, location, src, imgUrl } = props;
   return (
     <Card>
-      <Image shape="square" src={src} size="70px" />
+      <Image shape="square" src={imgUrl} size="70px" />
       <CardText>
         <Title>{title}</Title>
         <CompanyBox>

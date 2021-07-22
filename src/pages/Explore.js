@@ -16,7 +16,7 @@ const Explore = (props) => {
   const dispatch = useDispatch();
   const jobGroups = useSelector((state) => state.opening.jobGroups) || [];
   const openingList = useSelector((state) => state.opening.openings) || [];
-  const myLikeList = useSelector((state) => state.user.user.likeList) || [];
+  const myLikeList = useSelector((state) => state.user.user.likeIdList) || [];
 
   useEffect(() => {
     dispatch(getJobgroupsDB());

@@ -25,6 +25,7 @@ const initialState = {
   user: {
     name: "",
     email: "",
+    likeIdList: [],
     likeList: [],
   },
   is_login: false,
@@ -86,8 +87,8 @@ const loginCheckDB =
       })
       .then((res) => {
         const { openingApiResponses: likeList, ...rest } = res.data;
-        const list = likeList.map((item, idx) => item.openingId);
-        dispatch(setUser({ likeList: list, ...rest }));
+        const likeIdList = likeList.map((item) => item.openingId);
+        dispatch(setUser({ likeList, likeIdList, ...rest }));
       })
       .catch((err) => console.log("회원 인증에 실패했습니다.", err));
   };
@@ -108,13 +109,14 @@ export default handleActions(
       }),
     [ADD_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user.likeList.push(action.payload.openingId);
+        draft.user.likeIdList.push(action.payload.openingId);
       }),
     [REMOVE_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user.likeList = draft.user.likeList.filter(
-          (item) => item !== action.payload.openingId
-        );
+        draft.user.likeIdList = draft.user.likeIdList.map((item) => {
+          console.log(item, action.payload.openingId);
+          return item !== action.payload.openingId;
+        });
       }),
   },
   initialState

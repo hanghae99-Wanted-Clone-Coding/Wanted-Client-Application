@@ -13,7 +13,7 @@ const HeartBtn = (props) => {
   const openingId = Number(pathnameAry[pathnameAry.length - 1]);
 
   const { likeCnt } = useSelector((state) => state.opening.currentOpening);
-  const myLikeList = useSelector((state) => state.user.user.likeList) || [];
+  const myLikeList = useSelector((state) => state.user.user.likeIdLIst) || [];
   const isLogin = useSelector((state) => state.user.is_login);
 
   let isLike =
