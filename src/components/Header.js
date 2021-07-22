@@ -12,12 +12,28 @@ import MiniModal from "./modal/MiniModal";
 import LoginModal from "./modal/MiniModal";
 
 const Header = (props) => {
-  const isLogin = useSelector((state) => state.user.is_login);
-  const [showModal, setShowModal] = useState(false);
+  // history 객체 받아서 링크 연결해주기
 
-  const openModal = () => {
+  //테스트 때문에 임시 작성, 주석 풀고 밑의 useState 지워야함
+  const isLogin = useSelector((state) => state.user.is_login) || false;
+
+  console.log(isLogin);
+
+  const [showModal, setShowModal] = useState(false);
+  const [isMiniModal, setIsMiniModal] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState(false);
+ 
+  const openMiniModal = () => {
     setShowModal(true);
-  };
+    setIsMiniModal(true);
+    setIsLoginModal(false)
+  }
+
+  const openLoginModal = () => {
+    setShowModal(true);
+    setIsMiniModal(false);
+    setIsLoginModal(true);
+  }
 
   const closeModal = () => {
     setShowModal(false);
@@ -37,8 +53,9 @@ const Header = (props) => {
 
   return (
     <>
-      {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
-      {isLogin && <MiniModal showModal={showModal} closeModal={closeModal} />}
+     {isMiniModal && isLogin && (<MiniModal isMiniModal={isMiniModal} showModal={showModal} closeModal={closeModal}/>)}
+     {isLoginModal&&!isLogin && (<LoginModal showModal={showModal} closeModal={closeModal} />)}
+    
       <Container>
         <Content>
           <Left>
@@ -63,10 +80,8 @@ const Header = (props) => {
           <Right>
             <IconBtn icon={<HiOutlineSearch />} />
             {isLogin && <IconBtn icon={<VscBell />} />}
-            {isLogin && <IconBtn _onClick={openModal} icon={<VscMenu />} />}
-            {!isLogin && (
-              <ModalBtn onClick={openModal}>회원가입/로그인</ModalBtn>
-            )}
+            {isLogin && <IconBtn _onClick={openMiniModal} icon={<VscMenu /> } />}
+            {!isLogin && <ModalBtn onClick={openLoginModal}>회원가입/로그인</ModalBtn>}
           </Right>
         </Content>
       </Container>
