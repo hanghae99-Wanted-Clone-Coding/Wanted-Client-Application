@@ -33,7 +33,9 @@ const getJobgroupOpenings = createAction(GET_JOBGROUP_OPENINGS, (openings) => ({
 const getTagResults = createAction(GET_TAG_RESULTS, (openings) => ({
   openings,
 }));
-const getCareerResults = createAction(GET_CARRER_RESULTS);
+const getCareerResults = createAction(GET_CARRER_RESULTS, (openings) => ({
+  openings,
+}));
 const getOpeningDetail = createAction(GET_OPENING_DETAIL, (opening) => ({
   opening,
 }));
@@ -59,7 +61,10 @@ export const getJobgroupsDB =
   (dispatch, getState, { history }) => {
     apis
       .getJobgroups()
-      .then((res) => dispatch(getJobgroups(res.data)))
+      .then((res) => {
+        const { data: jobgroups } = res;
+        dispatch(getJobgroups(jobgroups));
+      })
       .catch((err) =>
         console.log("직무 그룹 리스트를 불러올 수 없습니다.", err)
       );
@@ -88,7 +93,10 @@ export const getAllOpeningsDB =
   (dispatch, getState, { history }) => {
     apis
       .getAllOpenings()
-      .then((res) => dispatch(getAllOpenings(res.data)))
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getAllOpenings(openings));
+      })
       .catch((err) => console.log("공고 목록을 가져올 수 없습니다.", err));
   };
 
@@ -96,23 +104,25 @@ export const getJobgroupOpeningsDB =
   (jobGroupId) =>
   (dispatch, getState, { history }) => {
     apis
-      .getJobGroupOpenings()
-      .then((res) => dispatch(getJobgroupOpenings(res.data)))
+      .getJobGroupOpenings(jobGroupId)
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getJobgroupOpenings(openings));
+      })
       .catch((err) =>
         console.log("해당 직무의 공고 목록를 불러올 수 없습니다.", err)
       );
   };
 
 export const getTagResultsDB =
-  (tagObj) =>
+  (tagName) =>
   (dispatch, getState, { history }) => {
-    const { tag1, tag2, tag3 } = tagObj;
-    const newTagObj = {
-      names: [{ name: tag1 }, { name: tag2 }, { name: tag3 }],
-    };
     apis
-      .getTagResults(newTagObj)
-      .then((res) => dispatch(getTagResults(res.data)))
+      .getTagResults(tagName)
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getTagResults(openings));
+      })
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
 
@@ -140,9 +150,21 @@ export const getRecommendedOpeningsDB =
 export const getCareerResultsDB =
   (career) =>
   (dispatch, getState, { history }) => {
+    let upperCareer;
+    if (career === "전체") {
+      dispatch(getAllOpeningsDB());
+      return;
+    } else if (career === "신입") {
+      upperCareer = "NEW_COMMER";
+    } else if (career === "경력") {
+      upperCareer = "CAREER";
+    }
     apis
-      .getCareerResults(career)
-      .then((res) => dispatch(getCareerResults(res.data)))
+      .getCareerResults(upperCareer)
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getCareerResults(openings));
+      })
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
 

@@ -46,7 +46,7 @@ const TagModal = ({ showModal, closeModal, isTag }) => {
   };
 
   const submitTags = () => {
-    dispatch(getTagResultsDB(choices));
+    dispatch(getTagResultsDB(choices[0]));
     closeModal();
   };
 
@@ -79,7 +79,7 @@ const TagModal = ({ showModal, closeModal, isTag }) => {
                   <Subtitle>1. 카테고리 선택</Subtitle>
                   <CategoriBox>
                     {categoryList.map((item, idx) => (
-                      <li key={idx} onClick={() => clickCategory(item.tagId)}>
+                      <li key={idx} onClick={() => clickCategory(item.id)}>
                         <CategoriBtn>{item.name}</CategoriBtn>
                       </li>
                     ))}

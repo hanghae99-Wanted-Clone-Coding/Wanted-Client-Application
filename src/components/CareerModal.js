@@ -1,15 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { history } from "../redux/configStore";
 import styled from "styled-components";
 import Text from "../elements/Text";
 import { flex } from "../mixin";
 
 import { GrClose } from "react-icons/gr";
+import { getCareerResultsDB } from "../redux/modules/opening";
 
 const CareerModal = ({ showModal, closeModal, current, _onSubmit }) => {
+  const dispatch = useDispatch();
   const [career, setCareer] = useState(current);
 
-  const handleSubmit = () => {
+  const clickCareer = (career) => {
+    history.push({
+      pathname: "/explore",
+      search: `?career=${career}`,
+    });
     _onSubmit(career);
+    dispatch(getCareerResultsDB(career));
     closeModal();
   };
 
@@ -20,7 +29,6 @@ const CareerModal = ({ showModal, closeModal, current, _onSubmit }) => {
           <ModalOverlay onClick={closeModal}></ModalOverlay>
           <ModalContent>
             <ModalHeader>
-              <div></div>
               <div>
                 <Text bold size="16px">
                   경력
@@ -41,7 +49,7 @@ const CareerModal = ({ showModal, closeModal, current, _onSubmit }) => {
               </Select>
             </ModalBody>
             <ModalFooter>
-              <Btn onClick={handleSubmit}>확인</Btn>
+              <Btn onClick={() => clickCareer(career)}>확인</Btn>
             </ModalFooter>
           </ModalContent>
         </ModalContainer>
