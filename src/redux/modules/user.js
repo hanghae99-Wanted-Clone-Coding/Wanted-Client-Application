@@ -48,8 +48,8 @@ const loginDB =
       .then((res) => {
         const accessToken = "Bearer " + res.data.accessToken;
         setCookie("isLogin", `${accessToken}`);
+        dispatch(loginCheckDB());
       })
-      .then(() => dispatch(setUserDB()))
       .catch((err) => {
         alert("로그인에 실패했습니다.");
         console.log(err);
@@ -86,8 +86,8 @@ const loginCheckDB =
       })
       .then((res) => {
         const { openingApiResponses: likeList, ...rest } = res.data;
-        dispatch(setUser({ likeList, ...rest }));
-        console.log(res.data);
+        const list = likeList.map((item, idx) => item.openingId);
+        dispatch(setUser({ likeList: list, ...rest }));
       })
       .catch((err) => console.log("회원 인증에 실패했습니다.", err));
   };

@@ -206,7 +206,7 @@ export default handleActions(
             : opening
         );
         draft.currentOpening.openingId === action.payload.openingId &&
-          draft.currentOpening.likeCount++;
+          draft.currentOpening.likeCnt++;
       }),
     [REMOVE_LIKE]: (state, action) =>
       produce(state, (draft) => {
@@ -216,7 +216,7 @@ export default handleActions(
             : opening
         );
         draft.currentOpening.openingId === action.payload.openingId &&
-          draft.currentOpening.likeCount--;
+          draft.currentOpening.likeCnt--;
       }),
     [GET_TAGS]: (state, action) =>
       produce(state, (draft) => {
