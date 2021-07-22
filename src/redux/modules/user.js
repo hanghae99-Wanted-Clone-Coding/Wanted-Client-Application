@@ -23,9 +23,9 @@ export const userRemoveLike = createAction(REMOVE_LIKE, (openingId) => ({
 // initialState
 const initialState = {
   user: {
-    name: "jihyun",
-    email: "hwiyu25@naver.com",
-    likeList: [1, 4, 12, 13, 18, 24, 30, 36, 40, 41],
+    name: "",
+    email: "",
+    likeList: [],
   },
   is_login: false,
 };

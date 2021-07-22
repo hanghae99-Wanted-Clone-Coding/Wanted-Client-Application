@@ -12,13 +12,7 @@ import MiniModal from "./modal/MiniModal";
 import LoginModal from "./modal/MiniModal";
 
 const Header = (props) => {
-  // history 객체 받아서 링크 연결해주기
-
-  //테스트 때문에 임시 작성, 주석 풀고 밑의 useState 지워야함
   const isLogin = useSelector((state) => state.user.is_login);
-
-  console.log(isLogin);
-
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -112,7 +106,7 @@ ${flex};
   -ms-overflow-style: none; } 
   &::-webkit-scrollbar { display: none; }
 
-  & > button:nth-child(3) {
+  & > button:nth-child(2) {
     border-color: ${({ theme }) => theme.colors.mainBlue};
   }
 `;

@@ -28,8 +28,8 @@ const App = () => {
         <GlobalStyles />
         <ConnectedRouter history={history}>
           <Header />
-          <Route path="/" exact component={Main} />
-          <Route path="/explore" exact component={Explore} />
+          {/* <Route path="/" exact component={Main} /> */}
+          <Route path="/" exact component={Explore} />
           <Route path="/opening/:openingId" exact component={Opening} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/user/kakao/callback" component={KakaoRedirect} />
