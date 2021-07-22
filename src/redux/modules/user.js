@@ -1,19 +1,18 @@
 import axios from "axios";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
+import { apis } from "../../shared/api";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
 // action type
 const LOGIN = "user/LOGIN";
 const LOGOUT = "user/LOGOUT";
-const SIGNUP = "user/SIGNUP";
 const ADD_LIKE = "user/ADD_LIKE";
 const REMOVE_LIKE = "user/REMOVE_LIKE";
 
 // action creator
 const login = createAction(LOGIN);
 const logout = createAction(LOGOUT);
-// const signUp = createAction(SIGNUP);
 export const userAddLike = createAction(ADD_LIKE, (openingId) => ({
   openingId,
 }));
@@ -65,11 +64,11 @@ const logoutDB = () => {
   };
 };
 
-const signUpDB = (infoObj) => {
-  return function (dispatch, getState, { history }) {
-    window.alert("회원가입 완료");
+const signUpDB =
+  (infoObj) =>
+  (dispatch, getState, { history }) => {
+    apis.signup(infoObj);
   };
-};
 
 // reducer
 export default handleActions(
@@ -105,6 +104,7 @@ const actionCreators = {
   logout,
   loginDB,
   logoutDB,
+  signUpDB,
 };
 
 export { actionCreators };
