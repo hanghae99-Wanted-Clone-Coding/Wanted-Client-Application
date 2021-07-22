@@ -78,21 +78,38 @@ const TagModal = ({ showModal, closeModal, isTag }) => {
                 <Box>
                   <Subtitle>1. 카테고리 선택</Subtitle>
                   <CategoriBox>
-                    {categoryList.map((item, idx) => (
-                      <li key={idx} onClick={() => clickCategory(item.id)}>
-                        <CategoriBtn>{item.name}</CategoriBtn>
-                      </li>
-                    ))}
+                    {categoryList.map((item, idx) => {
+                      return (
+                        <li key={idx} onClick={() => clickCategory(item.id)}>
+                          <CategoriBtn>{item.name}</CategoriBtn>
+                        </li>
+                      );
+                    })}
                   </CategoriBox>
                 </Box>
                 <Box>
                   <Subtitle>2. 태그 선택</Subtitle>
                   <TagBox>
-                    {secondTags.map((item, idx) => (
-                      <li key={idx} onClick={() => choiceTag(item.name)}>
-                        <Tag name={item.name} />
-                      </li>
-                    ))}
+                    {secondTags.map((item, idx) => {
+                      // 첫 번째 규칙(뒤의 %를 모두 뺌)
+                      let convertName;
+
+                      convertName = isNaN(
+                        Number(item.name[item.name.length - 1])
+                      )
+                        ? item.name
+                        : item.name + "%";
+
+                      if (item.name === "퇴사율205%25이하") {
+                        convertName = "퇴사율5%이하";
+                      }
+
+                      return (
+                        <li key={idx} onClick={() => choiceTag(item.name)}>
+                          <Tag name={convertName} />
+                        </li>
+                      );
+                    })}
                   </TagBox>
                 </Box>
               </Box>

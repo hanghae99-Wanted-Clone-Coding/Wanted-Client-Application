@@ -148,6 +148,9 @@ export const getJobgroupOpeningsDB =
 export const getTagResultsDB =
   (tagName) =>
   (dispatch, getState, { history }) => {
+    let name = tagName;
+    if (tagName[tagName.length - 1] === "&") name.splice(-1, 1);
+
     apis
       .getTagResults(tagName)
       .then((res) => {
