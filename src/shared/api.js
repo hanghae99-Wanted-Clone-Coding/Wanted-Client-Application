@@ -9,6 +9,8 @@ const api = axios.create({
 });
 
 export const apis = {
+  like: (openingId) => api.post(`api/openings/${openingId}/likes`),
+  dislike: (openingId) => api.put(`api/openings/${openingId}/likes`),
   getJobgroups: () => api.get("/api/job-groups"),
   getTags: () => api.get("/api/tag-categories"),
   getSecondTags: (tagCategoryId) => api.get(`/api/tags/${tagCategoryId}`),

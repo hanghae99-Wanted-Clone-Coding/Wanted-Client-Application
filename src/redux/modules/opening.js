@@ -1,9 +1,11 @@
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
 import { apis } from "../../shared/api";
+import { userAddLike, userRemoveLike } from "./user";
 
 // action type
-const TOGGLE_LIKE = "opening/TOGGLE_LIKE";
+const ADD_LIKE = "opening/ADD_LIKE";
+const REMOVE_LIKE = "opening/REMOVE_LIKE";
 const GET_JOBGROUPS = "opening/GET_JOBGROUPS";
 const GET_TAGS = "opening/GET_TAGS";
 const GET_SECOND_TAGS = "opening/GET_SECOND_TAGS";
@@ -16,7 +18,8 @@ const GET_RECOMMENDED_OPENINGS = "opening/GET_RECOMMENDED_OPENINGS";
 const REMOVE_CURRENT_OPENING = "opening/REMOVE_CURRENT_OPENING";
 
 // action creator
-const toggleLike = createAction(TOGGLE_LIKE);
+const addLike = createAction(ADD_LIKE, (openingId) => ({ openingId }));
+const removeLike = createAction(REMOVE_LIKE, (openingId) => ({ openingId }));
 const getJobgroups = createAction(GET_JOBGROUPS, (jobgroups) => ({
   jobgroups,
 }));
@@ -56,6 +59,34 @@ const initialState = {
 };
 
 // thunk
+
+export const toggleLikeDB =
+  (openingId, isLike) =>
+  (dispatch, getState, { history }) => {
+    // 이미 좋아요 한 상태
+    if (isLike === true) {
+      apis
+        .like(openingId)
+        .then((res) => {
+          dispatch(userRemoveLike(openingId));
+          dispatch(removeLike(openingId));
+        })
+        .catch((err) => console.log("좋아요 취소가 반영되지 않았습니다.", err));
+      dispatch(userRemoveLike(openingId));
+      dispatch(removeLike(openingId));
+    } else if (isLike === false) {
+      apis
+        .dislike(openingId)
+        .then((res) => {
+          dispatch(userAddLike(openingId));
+          dispatch(addLike(openingId));
+        })
+        .catch((err) => console.log("좋아요가 반영되지 않았습니다.", err));
+      dispatch(userAddLike(openingId));
+      dispatch(addLike(openingId));
+    }
+  };
+
 export const getJobgroupsDB =
   () =>
   (dispatch, getState, { history }) => {
@@ -171,7 +202,23 @@ export const getCareerResultsDB =
 // reducer
 export default handleActions(
   {
-    [TOGGLE_LIKE]: (state, action) => produce(state, (draft) => {}),
+    [ADD_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        // 공고 리스트 반영
+        draft.openings = draft.openings.map((opening) =>
+          opening.openingId === action.payload.openingId
+            ? { ...opening, likeCount: opening.likeCount + 1 }
+            : opening
+        );
+      }),
+    [REMOVE_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.openings = draft.openings.map((opening) =>
+          opening.openingId === action.payload.openingId
+            ? { ...opening, likeCount: opening.likeCount - 1 }
+            : opening
+        );
+      }),
     [GET_TAGS]: (state, action) =>
       produce(state, (draft) => {
         draft.tags = action.payload.tags;

@@ -3,10 +3,19 @@ import styled from "styled-components";
 import Image from "../elements/Image";
 import Text from "../elements/Text";
 import LikeBtn from "../elements/LikeBtn";
+import { useDispatch } from "react-redux";
+import { toggleLikeDB } from "../redux/modules/opening";
 
 const Card = (props) => {
-  const { title, imgUrl, likeCount, companyName, _onClick } = props;
+  const dispatch = useDispatch();
+  const { title, imgUrl, likeCount, companyName, openingId, isLike, _onClick } =
+    props;
   const [isLogin, setIsLogin] = useState(true);
+
+  const clickHeart = (e) => {
+    e.stopPropagation();
+    dispatch(toggleLikeDB(openingId, isLike));
+  };
 
   if (!isLogin) {
     return <Text>로그인 하시오 모달 창</Text>;
@@ -15,7 +24,9 @@ const Card = (props) => {
   return (
     <>
       <CardBox onClick={_onClick}>
-        <LikeBtn>{likeCount}</LikeBtn>
+        <LikeBtn isLike={isLike} _onClick={clickHeart}>
+          {likeCount}
+        </LikeBtn>
         <Image src={imgUrl} />
 
         <Text padding="15px">
