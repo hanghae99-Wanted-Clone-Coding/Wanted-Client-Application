@@ -55,7 +55,7 @@ const LoginModal = (props) => {
       return;
     }
 
-    // dispatch(userActions.loginDB({ email, password }));
+    dispatch(userActions.loginDB({ email, password }));
   };
 
   const clickSignUp = () => {
@@ -160,7 +160,9 @@ const LoginModal = (props) => {
                 )}
               </Box>
               <Box>
-                <EmailBtn onClick={loginMode ? clickLogin : clickSignUp}>
+                <EmailBtn
+                  onClick={loginMode === true ? clickLogin : clickSignUp}
+                >
                   <HiOutlineMail />
                   {loginMode ? "로그인하기" : "회원가입하기"}
                 </EmailBtn>

@@ -10,6 +10,7 @@ const api = axios.create({
 
 export const apis = {
   signup: (infoObj) => api.post(`auth/signup`, infoObj),
+  login: (infoObj) => api.post(`auth/login`, infoObj),
   like: (openingId) => api.post(`api/openings/${openingId}/likes`),
   dislike: (openingId) => api.put(`api/openings/${openingId}/likes`),
   getJobgroups: () => api.get("/api/job-groups"),

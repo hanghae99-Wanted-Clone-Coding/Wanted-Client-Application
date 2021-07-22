@@ -1,7 +1,6 @@
-import axios from "axios";
+import { apis } from "../../shared/api";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
-import { apis } from "../../shared/api";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
 // action type
@@ -31,30 +30,29 @@ const initialState = {
 };
 
 //middleware actions
-const loginDB = (code) => {
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: "GET",
-      // url: `/api/login?code=${code}`,
-      url: `http://52.79.144.138:8080/api/user/${code}`,
-      // 보내기로 약속한 url
-    })
-      .then((res) => {
-        console.log(res);
+const loginDB =
+  (infoObj) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .login(infoObj)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
-        const ACCESS_TOKEN = res.data.accessToken;
+    // .then((res) => {
+    //   console.log(res);
 
-        setCookie("is_login", `${ACCESS_TOKEN}`);
-        history.replace("/");
-        window.alert("성공");
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert("로그인에 실패하였습니다");
-        history.replace("/");
-      });
+    //   const ACCESS_TOKEN = res.data.accessToken;
+
+    //   setCookie("is_login", `${ACCESS_TOKEN}`);
+    //   history.replace("/");
+    //   window.alert("성공");
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    //   window.alert("로그인에 실패하였습니다");
+    //   history.replace("/");
+    // });
   };
-};
 
 const logoutDB = () => {
   return function (dispatch, getState, { history }) {
@@ -67,7 +65,10 @@ const logoutDB = () => {
 const signUpDB =
   (infoObj) =>
   (dispatch, getState, { history }) => {
-    apis.signup(infoObj);
+    apis.signup(infoObj).catch((err) => {
+      alert("회원가입에 실패했습니다.");
+      console.log(err);
+    });
   };
 
 // reducer
