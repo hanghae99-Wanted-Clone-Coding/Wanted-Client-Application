@@ -45,7 +45,7 @@ const loginDB =
     apis
       .login(infoObj)
       .then((res) => {
-        const accessToken = res.data.accessToken;
+        const accessToken = "Bearer " + res.data.accessToken;
         setCookie("isLogin", `${accessToken}`);
       })
       .then(() => dispatch(setUserDB()))
