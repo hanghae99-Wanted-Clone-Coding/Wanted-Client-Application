@@ -1,3 +1,4 @@
+import axios from "axios";
 import { apis } from "../../shared/api";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
@@ -72,6 +73,25 @@ const signUpDB =
     });
   };
 
+const loginCheckDB =
+  () =>
+  (dispatch, getState, { history }) => {
+    const token = getCookie("isLogin");
+
+    axios
+      .get("http://52.79.144.138/api/user/myInfos", {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => {
+        const { openingApiResponses: likeList, ...rest } = res.data;
+        dispatch(setUser({ likeList, ...rest }));
+        console.log(res.data);
+      })
+      .catch((err) => console.log("회원 인증에 실패했습니다.", err));
+  };
+
 // reducer
 export default handleActions(
   {
@@ -105,6 +125,7 @@ const actionCreators = {
   loginDB,
   logoutDB,
   signUpDB,
+  loginCheckDB,
 };
 
 export { actionCreators };
