@@ -23,11 +23,11 @@ const Header = (props) => {
 
   const openModal = () => {
     setShowModal(true);
-  }
+  };
 
   const closeModal = () => {
     setShowModal(false);
-  }
+  };
 
   const menuList = [
     {
@@ -43,12 +43,16 @@ const Header = (props) => {
 
   return (
     <>
-    {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
-    {isLogin && <MiniModal showModal={showModal} closeModal={closeModal}/>}
+      {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
+      {isLogin && <MiniModal showModal={showModal} closeModal={closeModal} />}
       <Container>
         <Content>
           <Left>
-            <LogoBtn src={Logo} alt="원티드" onClick={() => history.push("/")} />
+            <LogoBtn
+              src={Logo}
+              alt="원티드"
+              onClick={() => history.push("/")}
+            />
           </Left>
 
           <Mid>
@@ -65,8 +69,10 @@ const Header = (props) => {
           <Right>
             <IconBtn icon={<HiOutlineSearch />} />
             {isLogin && <IconBtn icon={<VscBell />} />}
-            {isLogin && <IconBtn _onClick={openModal} icon={<VscMenu /> } />}
-            {!isLogin && <ModalBtn onClick={openModal}>회원가입/로그인</ModalBtn>}
+            {isLogin && <IconBtn _onClick={openModal} icon={<VscMenu />} />}
+            {!isLogin && (
+              <ModalBtn onClick={openModal}>회원가입/로그인</ModalBtn>
+            )}
           </Right>
         </Content>
       </Container>
@@ -77,6 +83,11 @@ const Header = (props) => {
 const Container = styled.div`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: ${({ theme }) => theme.colors.white};
+  position: fixed;
+  top: 0;
+  left: 9;
+  z-index: 99;
 `;
 
 const Content = styled.div`
@@ -107,7 +118,7 @@ ${flex};
 `;
 
 const Right = styled.div`
-  display:flex;
+  display: flex;
   flex-shrink: 0;
 `;
 
