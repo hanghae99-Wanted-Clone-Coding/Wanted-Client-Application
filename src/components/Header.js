@@ -8,12 +8,26 @@ import { flex, hiddenMobile, onlyMobile } from "../mixin";
 import Logo from "../assets/wanted-logo.png";
 import IconBtn from "../elements/IconBtn";
 import { useSelector } from "react-redux";
+import MiniModal from "./modal/MiniModal";
+import LoginModal from "./modal/MiniModal";
 
 const Header = (props) => {
   // history 객체 받아서 링크 연결해주기
 
+  //테스트 때문에 임시 작성, 주석 풀고 밑의 useState 지워야함
   const isLogin = useSelector((state) => state.user.is_login);
+
   console.log(isLogin);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  }
+
+  const closeModal = () => {
+    setShowModal(false);
+  }
 
   const menuList = [
     {
@@ -28,31 +42,35 @@ const Header = (props) => {
   ];
 
   return (
-    <Container>
-      <Content>
-        <Left>
-          <LogoBtn src={Logo} alt="원티드" onClick={() => history.push("/")} />
-        </Left>
+    <>
+    {!isLogin && <LoginModal showModal={showModal} closeModal={closeModal} />}
+    {isLogin && <MiniModal showModal={showModal} closeModal={closeModal}/>}
+      <Container>
+        <Content>
+          <Left>
+            <LogoBtn src={Logo} alt="원티드" onClick={() => history.push("/")} />
+          </Left>
 
-        <Mid>
-          <HomeBtn>홈</HomeBtn>
-          {menuList.map((item, idx) => (
-            <TextBtn
-              key={idx}
-              onClick={item.path ? () => history.push(item.path) : null}
-            >
-              {item.name}
-            </TextBtn>
-          ))}
-        </Mid>
-        <Right>
-          <IconBtn icon={<HiOutlineSearch />} />
-          {isLogin && <IconBtn icon={<VscBell />} />}
-          {isLogin && <IconBtn icon={<VscMenu />} />}
-          {!isLogin && <ModalBtn>회원가입/로그인</ModalBtn>}
-        </Right>
-      </Content>
-    </Container>
+          <Mid>
+            <HomeBtn>홈</HomeBtn>
+            {menuList.map((item, idx) => (
+              <TextBtn
+                key={idx}
+                onClick={item.path ? () => history.push(item.path) : null}
+              >
+                {item.name}
+              </TextBtn>
+            ))}
+          </Mid>
+          <Right>
+            <IconBtn icon={<HiOutlineSearch />} />
+            {isLogin && <IconBtn icon={<VscBell />} />}
+            {isLogin && <IconBtn _onClick={openModal} icon={<VscMenu /> } />}
+            {!isLogin && <ModalBtn onClick={openModal}>회원가입/로그인</ModalBtn>}
+          </Right>
+        </Content>
+      </Container>
+    </>
   );
 };
 
@@ -89,6 +107,7 @@ ${flex};
 `;
 
 const Right = styled.div`
+  display:flex;
   flex-shrink: 0;
 `;
 
