@@ -1,15 +1,27 @@
 import axios from "axios";
 
+const accessToken = document.cookie.split("=")[1];
+
 const api = axios.create({
   baseURL: "http://52.79.144.138",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",
+    authorization: `${accessToken ? accessToken : null} `,
   },
 });
 
 export const apis = {
+  setUser: () =>
+    api.post(``, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+        accept: "application/json,",
+        authorization: accessToken,
+      },
+    }),
   signup: (infoObj) => api.post(`auth/signup`, infoObj),
+  login: (infoObj) => api.post(`auth/login`, infoObj),
   like: (openingId) => api.post(`api/openings/${openingId}/likes`),
   dislike: (openingId) => api.put(`api/openings/${openingId}/likes`),
   getJobgroups: () => api.get("/api/job-groups"),
