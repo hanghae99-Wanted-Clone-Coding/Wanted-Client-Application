@@ -9,12 +9,12 @@ import Logo from "../assets/wanted-logo.png";
 import IconBtn from "../elements/IconBtn";
 import { useSelector } from "react-redux";
 import MiniModal from "./modal/MiniModal";
-import LoginModal from "./modal/MiniModal";
+import LoginModal from "./modal/LoginModal";
 
 const Header = (props) => {
-  const isLogin = useSelector((state) => state.user.is_login);
+  const isLogin = useSelector((state) => state.user.is_login) || false;
   const [showModal, setShowModal] = useState(false);
-
+  console.log(isLogin);
   const openModal = () => {
     setShowModal(true);
   };
@@ -26,7 +26,7 @@ const Header = (props) => {
   const menuList = [
     {
       name: "탐색",
-      path: "/explore",
+      path: "/",
     },
     { name: "커리어 성장" },
     { name: "직군별 연봉" },
@@ -81,7 +81,7 @@ const Container = styled.div`
   position: fixed;
   top: 0;
   left: 9;
-  z-index: 99;
+  z-index: 50;
 `;
 
 const Content = styled.div`

@@ -213,6 +213,7 @@ const ModalContainer = styled.div`
 
 const ModalOverlay = styled.div`
   display: none;
+  z-index: 60;
 
   ${({ theme }) => theme.device.tablet} {
     position: absolute;
@@ -230,7 +231,7 @@ const ModalContent = styled.div`
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-
+  z-index: 70;
   ${({ theme }) => theme.device.tablet} {
     width: 400px;
     height: initial;
