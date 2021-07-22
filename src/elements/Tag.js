@@ -3,9 +3,14 @@ import styled, { css } from "styled-components";
 
 const Tag = ({ name, selected, _onClick }) => {
   if (selected) {
+    let convertName = isNaN(Number(name[name.length - 1])) ? name : name + "%";
+
+    if (name === "퇴사율205%25이하") {
+      convertName = "퇴사율5%이하";
+    }
     return (
       <BorderBtn onClick={_onClick}>
-        <BorderText>{name}</BorderText>
+        <BorderText>{convertName}</BorderText>
       </BorderBtn>
     );
   }

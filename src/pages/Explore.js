@@ -21,6 +21,7 @@ const Explore = (props) => {
   const dispatch = useDispatch();
   const jobGroups = useSelector((state) => state.opening.jobGroups) || [];
   const openingList = useSelector((state) => state.opening.openings) || [];
+  const myLikeList = useSelector((state) => state.user.user.likeList) || [];
 
   useEffect(() => {
     dispatch(getJobgroupsDB());
@@ -40,22 +41,19 @@ const Explore = (props) => {
 
   return (
     <>
-      {/* <Slider /> */}
-
-      {/* ↓↓↓ 테스트버튼입니다 - 서버와 연결할 때 삭제 필요 */}
-      <br />
-      <button onClick={() => clickJobGroup(id)}>테스트 버튼</button>
-      {/* ↑↑↑ 테스트버튼입니다. */}
-
       <Container>
         <JobGroups list={jobGroups} />
         <FilterHeader />
         <CardContainer>
           {openingList.map((l, idx) => {
+            const likeIdx = myLikeList.findIndex(
+              (item) => item === l.openingId
+            );
             return (
               <Card
                 key={idx}
                 {...l}
+                isLike={likeIdx === -1 ? false : true}
                 _onClick={() => moveDetailPage(l.openingId)}
               />
             );

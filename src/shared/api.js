@@ -9,18 +9,15 @@ const api = axios.create({
 });
 
 export const apis = {
+  like: (openingId) => api.post(`api/openings/${openingId}/likes`),
+  dislike: (openingId) => api.put(`api/openings/${openingId}/likes`),
   getJobgroups: () => api.get("/api/job-groups"),
   getTags: () => api.get("/api/tag-categories"),
   getSecondTags: (tagCategoryId) => api.get(`/api/tags/${tagCategoryId}`),
   getAllOpenings: () => api.get("/api/openings"),
-  getJobGroupOpenings: (jobgroupId) =>
-    api.get(`/api/openings/`, {
-      params: {
-        "jobgroup-id": jobgroupId,
-      },
-    }),
+  getJobGroupOpenings: (jobgroupId) => api.get(`/api/jobgroup/${jobgroupId}`),
   getTagResults: (tagName) =>
-    api.get(`/api/openings/`, {
+    api.get(`/api/search`, {
       params: {
         tagName,
       },
