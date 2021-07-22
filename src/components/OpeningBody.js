@@ -7,11 +7,16 @@ import { flex } from "../mixin";
 
 const OpeningBody = (props) => {
   const { companyName: company, content, locationDetail } = props;
-
   return (
     <>
       <MainTextBox>
-        <MainText>{content}</MainText>
+        {content.split("\n\n").map((phrase, idx) => (
+          <Phrase key={idx}>
+            {phrase.split("\n").map((item, idx) => (
+              <MainText key={idx}>{item}</MainText>
+            ))}
+          </Phrase>
+        ))}
       </MainTextBox>
 
       <List>
@@ -45,6 +50,10 @@ const MainTextBox = styled.div`
   ${({ theme }) => theme.device.tablet} {
     padding-bottom: 80px;
   }
+`;
+
+const Phrase = styled.div`
+  padding: 5px 0;
 `;
 
 const List = styled.dl`
