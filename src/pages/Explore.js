@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
-import LoginModal from "../components/LoginModal";
+import LoginModal from "../components/modal/LoginModal";
 import {
   getJobgroupsDB,
   getAllOpeningsDB,
@@ -15,16 +15,20 @@ import {
   getCareerResultsDB,
 } from "../redux/modules/opening";
 import CareerModal from "../components/CareerModal";
+import JobGroups from "../components/JobGroups";
 
 const Explore = (props) => {
   const dispatch = useDispatch();
   const jobGroups = useSelector((state) => state.opening.jobGroups) || [];
   const openingList = useSelector((state) => state.opening.openings) || [];
+  const myLikeList = useSelector((state) => state.user.user.likeList) || [];
 
   useEffect(() => {
     dispatch(getJobgroupsDB());
     dispatch(getAllOpeningsDB());
   }, []);
+
+  const moveDetailPage = (openingId) => history.push(`/opening/${openingId}`);
 
   const clickJobGroup = (jobGroupId) => {
     history.push({
@@ -35,27 +39,24 @@ const Explore = (props) => {
   };
   const id = 1;
 
-  const clickCareer = (career) => {
-    history.push({
-      pathname: "/",
-      search: `?career=${career}`,
-    });
-    dispatch(getCareerResultsDB(career));
-  };
-
   return (
     <>
-      <Slider />
-
-      {/* ↓↓↓ 테스트버튼입니다 - 서버와 연결할 때 삭제 필요 */}
-      <button onClick={() => clickJobGroup(id)}>테스트 버튼</button>
-      {/* ↑↑↑ 테스트버튼입니다. */}
-
       <Container>
+        <JobGroups list={jobGroups} />
         <FilterHeader />
         <CardContainer>
           {openingList.map((l, idx) => {
-            return <Card key={idx} {...l} />;
+            const likeIdx = myLikeList.findIndex(
+              (item) => item === l.openingId
+            );
+            return (
+              <Card
+                key={idx}
+                {...l}
+                isLike={likeIdx === -1 ? false : true}
+                _onClick={() => moveDetailPage(l.openingId)}
+              />
+            );
           })}
         </CardContainer>
       </Container>

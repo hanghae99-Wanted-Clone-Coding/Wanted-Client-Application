@@ -1,9 +1,11 @@
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
 import { apis } from "../../shared/api";
+import { userAddLike, userRemoveLike } from "./user";
 
 // action type
-const TOGGLE_LIKE = "opening/TOGGLE_LIKE";
+const ADD_LIKE = "opening/ADD_LIKE";
+const REMOVE_LIKE = "opening/REMOVE_LIKE";
 const GET_JOBGROUPS = "opening/GET_JOBGROUPS";
 const GET_TAGS = "opening/GET_TAGS";
 const GET_SECOND_TAGS = "opening/GET_SECOND_TAGS";
@@ -16,10 +18,8 @@ const GET_RECOMMENDED_OPENINGS = "opening/GET_RECOMMENDED_OPENINGS";
 const REMOVE_CURRENT_OPENING = "opening/REMOVE_CURRENT_OPENING";
 
 // action creator
-const toggleLike = createAction(TOGGLE_LIKE, (openings_id, is_like) => ({
-  openings_id,
-  is_like,
-}));
+const addLike = createAction(ADD_LIKE, (openingId) => ({ openingId }));
+const removeLike = createAction(REMOVE_LIKE, (openingId) => ({ openingId }));
 const getJobgroups = createAction(GET_JOBGROUPS, (jobgroups) => ({
   jobgroups,
 }));
@@ -36,7 +36,9 @@ const getJobgroupOpenings = createAction(GET_JOBGROUP_OPENINGS, (openings) => ({
 const getTagResults = createAction(GET_TAG_RESULTS, (openings) => ({
   openings,
 }));
-const getCareerResults = createAction(GET_CARRER_RESULTS);
+const getCareerResults = createAction(GET_CARRER_RESULTS, (openings) => ({
+  openings,
+}));
 const getOpeningDetail = createAction(GET_OPENING_DETAIL, (opening) => ({
   opening,
 }));
@@ -58,18 +60,42 @@ const initialState = {
 
 // thunk
 
-export const toggleLikeDB = (openings_id) => {
-  return function (dispatch, getState, {history}) {
-    
-  }
-}
+export const toggleLikeDB =
+  (openingId, isLike) =>
+  (dispatch, getState, { history }) => {
+    // 이미 좋아요 한 상태
+    if (isLike === true) {
+      apis
+        .like(openingId)
+        .then((res) => {
+          dispatch(userRemoveLike(openingId));
+          dispatch(removeLike(openingId));
+        })
+        .catch((err) => console.log("좋아요 취소가 반영되지 않았습니다.", err));
+      dispatch(userRemoveLike(openingId));
+      dispatch(removeLike(openingId));
+    } else if (isLike === false) {
+      apis
+        .dislike(openingId)
+        .then((res) => {
+          dispatch(userAddLike(openingId));
+          dispatch(addLike(openingId));
+        })
+        .catch((err) => console.log("좋아요가 반영되지 않았습니다.", err));
+      dispatch(userAddLike(openingId));
+      dispatch(addLike(openingId));
+    }
+  };
 
 export const getJobgroupsDB =
   () =>
   (dispatch, getState, { history }) => {
     apis
       .getJobgroups()
-      .then((res) => dispatch(getJobgroups(res.data)))
+      .then((res) => {
+        const { data: jobgroups } = res;
+        dispatch(getJobgroups(jobgroups));
+      })
       .catch((err) =>
         console.log("직무 그룹 리스트를 불러올 수 없습니다.", err)
       );
@@ -98,7 +124,10 @@ export const getAllOpeningsDB =
   (dispatch, getState, { history }) => {
     apis
       .getAllOpenings()
-      .then((res) => dispatch(getAllOpenings(res.data)))
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getAllOpenings(openings));
+      })
       .catch((err) => console.log("공고 목록을 가져올 수 없습니다.", err));
   };
 
@@ -106,23 +135,28 @@ export const getJobgroupOpeningsDB =
   (jobGroupId) =>
   (dispatch, getState, { history }) => {
     apis
-      .getJobGroupOpenings()
-      .then((res) => dispatch(getJobgroupOpenings(res.data)))
+      .getJobGroupOpenings(jobGroupId)
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getJobgroupOpenings(openings));
+      })
       .catch((err) =>
         console.log("해당 직무의 공고 목록를 불러올 수 없습니다.", err)
       );
   };
 
 export const getTagResultsDB =
-  (tagObj) =>
+  (tagName) =>
   (dispatch, getState, { history }) => {
-    const { tag1, tag2, tag3 } = tagObj;
-    const newTagObj = {
-      names: [{ name: tag1 }, { name: tag2 }, { name: tag3 }],
-    };
+    let name = tagName;
+    if (tagName[tagName.length - 1] === "&") name.splice(-1, 1);
+
     apis
-      .getTagResults(newTagObj)
-      .then((res) => dispatch(getTagResults(res.data)))
+      .getTagResults(tagName)
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getTagResults(openings));
+      })
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
 
@@ -150,18 +184,48 @@ export const getRecommendedOpeningsDB =
 export const getCareerResultsDB =
   (career) =>
   (dispatch, getState, { history }) => {
+    let upperCareer;
+    if (career === "전체") {
+      dispatch(getAllOpeningsDB());
+      return;
+    } else if (career === "신입") {
+      upperCareer = "NEW_COMMER";
+    } else if (career === "경력") {
+      upperCareer = "CAREER";
+    }
     apis
-      .getCareerResults(career)
-      .then((res) => dispatch(getCareerResults(res.data)))
+      .getCareerResults(upperCareer)
+      .then((res) => {
+        const { openingApiResponses: openings, pagination } = res.data;
+        dispatch(getCareerResults(openings));
+      })
       .catch((err) => console.log("결과를 불러올 수 없습니다.", err));
   };
-
-
 
 // reducer
 export default handleActions(
   {
-    [TOGGLE_LIKE]: (state, action) => produce(state, (draft) => {}),
+    [ADD_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        // 공고 리스트 반영
+        draft.openings = draft.openings.map((opening) =>
+          opening.openingId === action.payload.openingId
+            ? { ...opening, likeCount: opening.likeCount + 1 }
+            : opening
+        );
+        draft.currentOpening.openingId === action.payload.openingId &&
+          draft.currentOpening.likeCount++;
+      }),
+    [REMOVE_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.openings = draft.openings.map((opening) =>
+          opening.openingId === action.payload.openingId
+            ? { ...opening, likeCount: opening.likeCount - 1 }
+            : opening
+        );
+        draft.currentOpening.openingId === action.payload.openingId &&
+          draft.currentOpening.likeCount--;
+      }),
     [GET_TAGS]: (state, action) =>
       produce(state, (draft) => {
         draft.tags = action.payload.tags;
