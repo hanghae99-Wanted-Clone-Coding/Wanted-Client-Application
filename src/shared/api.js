@@ -42,5 +42,4 @@ export const apis = {
       },
     }),
   getOpeningDetail: (openingId) => api.get(`/api/openings/${openingId}`),
-  getRecommendedOpenings: () => api.get("/api/recommend"),
 };

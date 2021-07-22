@@ -86,8 +86,7 @@ const loginCheckDB =
       })
       .then((res) => {
         const { openingApiResponses: likeList, ...rest } = res.data;
-        const list = likeList.map((item, idx) => item.openingId);
-        dispatch(setUser({ likeList: list, ...rest }));
+        dispatch(setUser({ likeList, ...rest }));
       })
       .catch((err) => console.log("회원 인증에 실패했습니다.", err));
   };

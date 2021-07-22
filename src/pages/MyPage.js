@@ -38,6 +38,7 @@ const Page = styled.main`
   ${flexColumn};
   min-height: calc(100vh - 70px);
   background-color: ${({ theme }) => theme.colors.bgGray};
+  margin-top: -20px;
 
   ${({ theme }) => theme.device.tablet} {
     align-items: flex-start;
