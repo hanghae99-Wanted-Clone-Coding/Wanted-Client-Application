@@ -12,7 +12,7 @@ const HeartBtn = (props) => {
   const pathnameAry = history.location.pathname.split("/");
   const openingId = Number(pathnameAry[pathnameAry.length - 1]);
 
-  const { likeCnt } = useSelector((state) => state.opening.currentOpening) || 0;
+  const { likeCnt } = useSelector((state) => state.opening.currentOpening);
   const myLikeList = useSelector((state) => state.user.user.likeList) || [];
   const isLogin = useSelector((state) => state.user.is_login);
 

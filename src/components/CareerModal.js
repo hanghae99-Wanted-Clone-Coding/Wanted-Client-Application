@@ -14,7 +14,7 @@ const CareerModal = ({ showModal, closeModal, current, _onSubmit }) => {
 
   const clickCareer = (career) => {
     history.push({
-      pathname: "/explore",
+      pathname: "/",
       search: `?career=${career}`,
     });
     _onSubmit(career);

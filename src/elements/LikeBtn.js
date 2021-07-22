@@ -27,7 +27,6 @@ const Btn = styled.button`
   font-size: 12px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.heartGray};
-  // background-color: ${({ theme }) => theme.colors.gray};
   background: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
 

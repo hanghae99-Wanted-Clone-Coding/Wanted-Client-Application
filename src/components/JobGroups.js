@@ -27,7 +27,7 @@ const JobGroups = ({ list }) => {
 
   const clickJobGroup = (id) => {
     history.push({
-      pathname: "/explore",
+      pathname: "/",
       search: `?jobgroup=${id}`,
     });
     dispatch(getJobgroupOpeningsDB(id));
