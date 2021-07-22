@@ -21,7 +21,7 @@ const LoginModal = (props) => {
     email: "",
     password: "",
     passwordCheck: "",
-    nickname: "",
+    name: "",
   });
 
   let regExp =
@@ -33,7 +33,7 @@ const LoginModal = (props) => {
       email: "",
       password: "",
       passwordCheck: "",
-      nickname: "",
+      name: "",
     });
     closeModal();
   };
@@ -59,9 +59,9 @@ const LoginModal = (props) => {
   };
 
   const clickSignUp = () => {
-    const { nickname, email, password, passwordCheck } = userInfo;
-    if (nickname.length <= 2) {
-      alert("닉네임은 두 글자 이상 입력해주세요.");
+    const { name, email, password, passwordCheck } = userInfo;
+    if (name.length <= 2) {
+      alert("이름은 두 글자 이상 입력해주세요.");
       return;
     }
 
@@ -85,9 +85,7 @@ const LoginModal = (props) => {
       return;
     }
 
-    // dispatch(
-    //   userActions.signUpDB({ nickname, email, password, passwordCheck })
-    // );
+    dispatch(userActions.signUpDB({ name, email, password }));
   };
 
   return (
@@ -117,10 +115,10 @@ const LoginModal = (props) => {
               <Box>
                 {!loginMode && (
                   <Box padding="0 0 22px 0">
-                    <label>닉네임</label>
+                    <label>이름</label>
                     <Input
                       onChange={(e) =>
-                        setUserInfo({ ...userInfo, nickname: e.target.value })
+                        setUserInfo({ ...userInfo, name: e.target.value })
                       }
                       value={userInfo.nickname}
                     />
