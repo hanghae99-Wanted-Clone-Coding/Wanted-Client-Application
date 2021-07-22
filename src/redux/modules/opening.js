@@ -210,6 +210,8 @@ export default handleActions(
             ? { ...opening, likeCount: opening.likeCount + 1 }
             : opening
         );
+        draft.currentOpening.openingId === action.payload.openingId &&
+          draft.currentOpening.likeCount++;
       }),
     [REMOVE_LIKE]: (state, action) =>
       produce(state, (draft) => {
@@ -218,6 +220,8 @@ export default handleActions(
             ? { ...opening, likeCount: opening.likeCount - 1 }
             : opening
         );
+        draft.currentOpening.openingId === action.payload.openingId &&
+          draft.currentOpening.likeCount--;
       }),
     [GET_TAGS]: (state, action) =>
       produce(state, (draft) => {
