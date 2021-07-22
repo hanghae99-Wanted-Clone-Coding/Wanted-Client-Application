@@ -8,12 +8,7 @@ import Slider from "../components/Slider";
 import FilterHeader from "../components/FilterHeader";
 import TagModal from "../components/TagModal";
 import LoginModal from "../components/modal/LoginModal";
-import {
-  getJobgroupsDB,
-  getAllOpeningsDB,
-  getJobgroupOpeningsDB,
-  getCareerResultsDB,
-} from "../redux/modules/opening";
+import { getJobgroupsDB, getAllOpeningsDB } from "../redux/modules/opening";
 import CareerModal from "../components/CareerModal";
 import JobGroups from "../components/JobGroups";
 
@@ -29,15 +24,6 @@ const Explore = (props) => {
   }, []);
 
   const moveDetailPage = (openingId) => history.push(`/opening/${openingId}`);
-
-  const clickJobGroup = (jobGroupId) => {
-    history.push({
-      pathname: "/",
-      search: `?jobgroup=${id}`,
-    });
-    dispatch(getJobgroupOpeningsDB(jobGroupId));
-  };
-  const id = 1;
 
   return (
     <>

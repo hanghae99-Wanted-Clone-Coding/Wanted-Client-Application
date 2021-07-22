@@ -1,19 +1,17 @@
-import axios from "axios";
+import { apis } from "../../shared/api";
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
 // action type
-const LOGIN = "user/LOGIN";
+const SET_USER = "user/SET_USER";
 const LOGOUT = "user/LOGOUT";
-const SIGNUP = "user/SIGNUP";
 const ADD_LIKE = "user/ADD_LIKE";
 const REMOVE_LIKE = "user/REMOVE_LIKE";
 
 // action creator
-const login = createAction(LOGIN);
+const setUser = createAction(SET_USER, (user) => ({ user }));
 const logout = createAction(LOGOUT);
-// const signUp = createAction(SIGNUP);
 export const userAddLike = createAction(ADD_LIKE, (openingId) => ({
   openingId,
 }));
@@ -32,30 +30,30 @@ const initialState = {
 };
 
 //middleware actions
-const loginDB = (code) => {
-  return function (dispatch, getState, { history }) {
-    axios({
-      method: "GET",
-      // url: `/api/login?code=${code}`,
-      url: `http://52.79.144.138:8080/api/user/${code}`,
-      // 보내기로 약속한 url
-    })
+const setUserDB =
+  () =>
+  (dispatch, getState, { history }) => {
+    apis
+      .setUser()
+      .then((res) => dispatch(setUser(res.data)))
+      .catch((err) => console.log("유저 정보를 받아오지 못했습니다.", err));
+  };
+
+const loginDB =
+  (infoObj) =>
+  (dispatch, getState, { history }) => {
+    apis
+      .login(infoObj)
       .then((res) => {
-        console.log(res);
-
-        const ACCESS_TOKEN = res.data.accessToken;
-
-        setCookie("is_login", `${ACCESS_TOKEN}`);
-        history.replace("/");
-        window.alert("성공");
+        const accessToken = "Bearer " + res.data.accessToken;
+        setCookie("isLogin", `${accessToken}`);
       })
+      .then(() => dispatch(setUserDB()))
       .catch((err) => {
+        alert("로그인에 실패했습니다.");
         console.log(err);
-        window.alert("로그인에 실패하였습니다");
-        history.replace("/");
       });
   };
-};
 
 const logoutDB = () => {
   return function (dispatch, getState, { history }) {
@@ -65,24 +63,26 @@ const logoutDB = () => {
   };
 };
 
-const signUpDB = (infoObj) => {
-  return function (dispatch, getState, { history }) {
-    window.alert("회원가입 완료");
+const signUpDB =
+  (infoObj) =>
+  (dispatch, getState, { history }) => {
+    apis.signup(infoObj).catch((err) => {
+      alert("회원가입에 실패했습니다.");
+      console.log(err);
+    });
   };
-};
 
 // reducer
 export default handleActions(
   {
-    [LOGIN]: (state, action) =>
+    [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        setCookie("is_login", "success");
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
     [LOGOUT]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("is_login");
+        deleteCookie("isLogin");
         draft.user = {};
         draft.is_login = false;
       }),
@@ -101,10 +101,10 @@ export default handleActions(
 );
 
 const actionCreators = {
-  login,
   logout,
   loginDB,
   logoutDB,
+  signUpDB,
 };
 
 export { actionCreators };

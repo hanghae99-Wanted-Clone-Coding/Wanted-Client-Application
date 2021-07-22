@@ -12,7 +12,7 @@ import {
   getTagsDB,
 } from "../redux/modules/opening";
 
-const TagModal = ({ showModal, closeModal, isTag }) => {
+const TagModal = ({showModal, closeModal}) => {
   const dispatch = useDispatch();
   const categoryList = useSelector((state) => state.opening.tags) || [];
   const secondTags = useSelector((state) => state.opening.secondTag) || [];
