@@ -13,7 +13,7 @@ const api = axios.create({
 
 export const apis = {
   setUser: () =>
-    api.post(``, {
+    api.get(`/api/user/myInfos`, {
       headers: {
         "content-type": "application/json;charset=UTF-8",
         accept: "application/json,",
@@ -41,6 +41,6 @@ export const apis = {
         career,
       },
     }),
-  getOpeningDetail: (openingId) => api.get(`/opening`),
+  getOpeningDetail: (openingId) => api.get(`/api/openings/${openingId}`),
   getRecommendedOpenings: () => api.get("/api/recommend"),
 };

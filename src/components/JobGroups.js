@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { history } from "../redux/configStore";
 import Slider from "react-slick";
 import { container, flex } from "../mixin";
 // import { BsChevronLeft } from "react-icons/bs";
@@ -11,13 +12,6 @@ import { getJobgroupOpeningsDB } from "../redux/modules/opening";
 
 const JobGroups = ({ list }) => {
   const dispatch = useDispatch();
-  // const ArrowLeft = (props) => {
-  //   return (
-  //     <button {...props} className="slick-prev slick-arrow">
-  //       <BsChevronLeft />
-  //     </button>
-  //   );
-  // };
 
   const settings = {
     dots: false,
@@ -32,6 +26,10 @@ const JobGroups = ({ list }) => {
   };
 
   const clickJobGroup = (id) => {
+    history.push({
+      pathname: "/explore",
+      search: `?jobgroup=${id}`,
+    });
     dispatch(getJobgroupOpeningsDB(id));
   };
 
